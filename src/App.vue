@@ -1,28 +1,41 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <myToolbar />
+    <v-main>
+      <v-slide-y-transition mode="out-in">
+        <router-view />
+      </v-slide-y-transition>
+    </v-main>
+  </v-app>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
+<script>
+import myToolbar from "@/components/Toolbar";
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: { myToolbar },
+  computed : {
+    isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
+  },
+  methods: {
+    logout: function () {
+      this.$store.dispatch('logout')
+          .then(() => {
+            this.$router.push('/auth')
+          })
+    },
+  },
+  created: function () {
+    this.$http.interceptors.response.use(undefined, function (err) {
+      // eslint-disable-next-line no-unused-vars
+      return new Promise(function (resolve, reject) {
+        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
+          this.$store.dispatch('logout')
+        }
+        throw err;
+      });
+    });
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

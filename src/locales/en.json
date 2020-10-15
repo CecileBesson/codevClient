@@ -1,0 +1,17 @@
+{
+  "message": "hello i18n !!",
+  "title": "Codev Client",
+  "about": "Notre application propose des échanges de services entre particuliers. Proposez ou demandez un service à proximité de chez vous!",
+  "drawer.mailbox": "Messagerie",
+  "drawer.services": "Mes services à venir",
+  "drawer.offerAservice": "Proposez un service !",
+  "drawer.offeredServices": "Mes services proposés",
+  "drawer.settings": "Paramètres de compte",
+  "drawer.login": "Se connecter",
+  "drawer.logout": "Se déconnecter",
+  "login.mail": "Entrez votre email",
+  "login.password": "Entrez votre mot de passe",
+  "home.welcome": "Bienvenue !",
+  "register.message" : "S'enregistrer"
+
+}
