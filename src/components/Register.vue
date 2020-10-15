@@ -20,26 +20,22 @@
         label="E-mail"
     ></v-text-field>
     <v-text-field
+        type="password"
         v-model="password"
-        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[rules.required, rules.min]"
-        :type="show1 ? 'text' : 'password'"
         name="password"
         label="Mot de passe"
         hint="At least 6 characters"
         counter
-        @click:append="show1 = !show1"
     ></v-text-field>
     <v-text-field
+        type="password"
         v-model="password_confirmation"
-        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[rules.required, rules.min, (password === password_confirmation) || 'Password must match']"
-        :type="show2 ? 'text' : 'password'"
         name="password"
         label="Confirmation du mot de passe"
         hint="At least 6 characters"
         counter
-        @click:append="show2 = !show2"
     ></v-text-field>
     <v-btn type="submit" :disabled="!isValid">
       {{ $t("register.message") }}
@@ -57,8 +53,6 @@ export default {
       mail : "",
       password : "",
       password_confirmation : "",
-      show1: false,
-      show2: false,
       isValid: true,
       rules: {
         required: v => !!v || 'Required.',

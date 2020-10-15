@@ -9,14 +9,12 @@
     ></v-text-field>
     <v-text-field
         v-model="password"
-        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+        type="password"
         :rules="[rules.required, rules.min]"
-        :type="show1 ? 'text' : 'password'"
         name="password"
         label="Mot de passe"
         hint="At least 6 characters"
         counter
-        @click:append="show1 = !show1"
     ></v-text-field>
     <a href="/register">Pas de compte? Inscrivez-vous ici !</a><br/><br/>
     <v-btn type="submit"  :disabled="!isValid">
@@ -30,7 +28,6 @@
 <script>
 export default {
   name: 'Login',
-  show1: false,
   data(){
     return {
       email : "",
