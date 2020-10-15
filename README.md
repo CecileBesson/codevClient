@@ -1,4 +1,4 @@
-# codev_client_test
+# codevClient
 
 ## Project setup
 ```
