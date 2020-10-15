@@ -5,6 +5,7 @@ import Auth from '../components/Login.vue'
 import Secure from '../components/Secure.vue'
 import Register from '../components/Register.vue'
 import store from '../store/index.js'
+import Logout from "@/components/Logout";
 
 Vue.use(VueRouter)
 
@@ -18,6 +19,11 @@ const routes = [
     path: '/auth',
     name: 'auth',
     component: Auth
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: Logout
   },
   {
     path: '/register',
