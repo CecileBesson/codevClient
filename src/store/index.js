@@ -9,7 +9,8 @@ export default new Vuex.Store({
         status: '',
         token: localStorage.getItem('token') || '',
         user : {},
-        isLoggedIn: !!localStorage.getItem('token')
+        isLoggedIn: !!localStorage.getItem('token'),
+        alertDlg: false
     },
     mutations: {
         auth_request(state){
@@ -23,6 +24,7 @@ export default new Vuex.Store({
         },
         auth_error(state){
             state.status = 'error'
+            state.alertDlg = true
         },
         logout(state){
             state.status = ''
@@ -53,6 +55,7 @@ export default new Vuex.Store({
                     })
                     .catch(err => {
                         commit('auth_error')
+                       // this.message = "Mail ou mot de passe invalide"
                         localStorage.removeItem('token')
                         reject(err)
                     })
@@ -90,6 +93,9 @@ export default new Vuex.Store({
     getters : {
         isLoggedIn: state => {
             return state.isLoggedIn
+        },
+        alertDlg: state => {
+            return state.alertDlg
         },
         authStatus: state => state.status,
     }

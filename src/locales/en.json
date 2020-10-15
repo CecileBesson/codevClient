@@ -12,6 +12,7 @@
   "login.mail": "Entrez votre email",
   "login.password": "Entrez votre mot de passe",
   "home.welcome": "Bienvenue !",
-  "register.message" : "S'enregistrer"
+  "register.message" : "S'enregistrer",
+  "alert.authFailed": "L'adresse mail ou le mot de passe est incorrect"
 
 }

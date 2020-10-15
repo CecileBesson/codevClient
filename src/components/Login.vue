@@ -1,6 +1,6 @@
 <template>
-  <v-form class="login" v-model="isValid" @submit.prevent="login">
-    <h1>{{ $t("drawer.login") }}</h1>
+  <v-form class="login"  v-model="isValid" @submit.prevent="login">
+    <div class="title"> {{ $t("drawer.login") }}</div>
     <v-text-field
         v-model="email"
         :rules="[rules.validEmail]"
@@ -16,6 +16,12 @@
         hint="At least 6 characters"
         counter
     ></v-text-field>
+    <v-alert v-if="alertDlg" color="cyan"
+             border="left"
+             elevation="2"
+             colored-border>
+      {{$t("alert.authFailed")}}
+    </v-alert>
     <a href="/register">Pas de compte? Inscrivez-vous ici !</a><br/><br/>
     <v-btn type="submit"  :disabled="!isValid">
       {{ $t("drawer.login") }}
@@ -38,6 +44,11 @@ export default {
         min: v => v.length >= 6 || 'Min 6 characters',
         validEmail: value => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'E-mail must be valid'
       },
+    }
+  },
+  computed: {
+    alertDlg() {
+      return this.$store.getters.alertDlg;
     }
   },
   methods: {
@@ -66,7 +77,18 @@ export default {
 button{
   padding-top: 5px;
 }
-h1{
-  font-size: 45px;
+@media title and (width: 500px){
+  .title{
+    font-size: 12px;
+  }
+
 }
+@media title and (width: 501px){
+  .title{
+    font-size: 45px;
+  }
+
+
+}
+
 </style>
