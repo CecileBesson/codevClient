@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Auth from '../components/Login.vue'
-import Secure from '../components/Secure.vue'
 import Register from '../components/Register.vue'
 import store from '../store/index.js'
 import Logout from "@/components/Logout";
@@ -29,14 +28,6 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
-  },
-  {
-    path: '/secure',
-    name: 'secure',
-    component: Secure,
-    meta: {
-      requiresAuth: true
-    }
   }
 ]
 

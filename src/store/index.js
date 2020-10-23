@@ -6,28 +6,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        status: '',
         token: localStorage.getItem('token') || '',
         user : {},
         isLoggedIn: !!localStorage.getItem('token'),
         alertDlg: false
     },
     mutations: {
-        auth_request(state){
-            state.status = 'loading'
+        auth_request(state) {
         },
         auth_success(state, token, user){
-            state.status = 'success'
             state.token = token
             state.user = user
             state.isLoggedIn = true
         },
         auth_error(state){
-            state.status = 'error'
             state.alertDlg = true
         },
         logout(state){
-            state.status = ''
             state.token = ''
             state.isLoggedIn = false
         },
@@ -41,7 +36,6 @@ export default new Vuex.Store({
                     headers: {
                         'Access-Control-Allow-Origin': 'http://localhost:8081',
                         'Content-Type': 'multipart/form-data',
-
                     },
                 };
                 axios({url: 'http://localhost:9000/api/v1/auth', data: user, method: 'POST', config})
@@ -97,6 +91,5 @@ export default new Vuex.Store({
         alertDlg: state => {
             return state.alertDlg
         },
-        authStatus: state => state.status,
     }
 })
