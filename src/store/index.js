@@ -12,8 +12,6 @@ export default new Vuex.Store({
         alertDlg: false
     },
     mutations: {
-        auth_request(state) {
-        },
         auth_success(state, token, user){
             state.token = token
             state.user = user
@@ -31,7 +29,6 @@ export default new Vuex.Store({
     actions: {
         auth({commit}, user){
             return new Promise((resolve, reject) => {
-                commit('auth_request')
                 let config = {
                     headers: {
                         'Access-Control-Allow-Origin': 'http://localhost:8081',
