@@ -27,15 +27,10 @@ export default {
         {icon: 'fas fa-calendar-plus', text: this.$t("drawer.offerAservice"), action: '/services'},
         {icon: 'fas fa-list', text: this.$t("drawer.offeredServices"), action: '/services'},
         {icon: 'fas fa-users-cog', text: this.$t("drawer.settings"), action: '/'},
-        {icon: 'fas fa-user', text: this.$t("drawer.logout"), action: 'logout'},
+        {icon: 'fas fa-user', text: this.$t("drawer.logout"), action: '/logout'},
       ]
     }
   },
-  /*methods:{
-    logout: function() {
-      this.$store.dispatch('logout').then(() => this.$router.push("/auth"));
-    }
-  },*/
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;

@@ -3,7 +3,7 @@
     <v-app-bar dark
                prominent
                src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
-    clipped-left app>
+               clipped-left app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title @click="goHome" class="white--text">{{$t("title")}}</v-toolbar-title>
 
@@ -13,6 +13,8 @@
       </v-btn>
     </v-app-bar>
 
+
+
     <v-navigation-drawer v-model="drawer" clipped fixed app >
       <myContentDrawer />
     </v-navigation-drawer>
@@ -21,10 +23,14 @@
 
 <script>
 import myContentDrawer from "@/components/Drawer"
+//import searchBar from "@/components/SearchBar";
 
 export default {
   name: 'myToolbar',
-  components: {myContentDrawer},
+  components:{
+    myContentDrawer,
+   // searchBar,
+  },
   data: function () {
     return {
       drawer: false
