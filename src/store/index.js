@@ -8,6 +8,7 @@ export default new Vuex.Store({
     state: {
         token: localStorage.getItem('token') || '',
         user : {},
+        categories: {},
         isLoggedIn: !!localStorage.getItem('token'),
         alertDlg: false
     },
@@ -24,6 +25,12 @@ export default new Vuex.Store({
             state.token = ''
             state.isLoggedIn = false
         },
+        set_categories(state, categories){
+            state.categories = categories
+        },
+        set_servicesByCategory(state, servicesByCategory){
+            state.servicesBycategory = servicesByCategory
+        }
 
     },
     actions: {
@@ -39,8 +46,7 @@ export default new Vuex.Store({
                     .then(resp => {
                         const token = resp.data.token
                         localStorage.setItem('token', token)
-                        // console.log(token);
-                        axios.defaults.headers.common['Authorization'] = token
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
                         commit('auth_success', token, user)
                         resolve(resp)
                     })
@@ -60,7 +66,7 @@ export default new Vuex.Store({
                         const token = resp.data.token
                         const user = resp.data.user
                         localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = token
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
                         commit('auth_success', token, user)
                         resolve(resp)
                     })
@@ -79,7 +85,38 @@ export default new Vuex.Store({
                 delete axios.defaults.headers.common['Authorization']
                 resolve()
             })
-        }
+        },
+        getCategories({commit}){
+            return new Promise((resolve, reject) => {
+                axios({url: 'http://localhost:9000/api/v1/category', method: 'GET' })
+                    .then(resp => {
+                        commit('set_categories', resp.data)
+                      //  console.log(JSON.stringify(resp.data))
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        localStorage.removeItem('token')
+                        reject(err)
+                    })
+            })
+        },
+        getServicesByCategory({commit}, category){
+            return new Promise((resolve, reject) => {
+             //   console.log(JSON.stringify(category));
+             //   console.log(category.idCategory);
+                axios({url: 'http://localhost:9000/api/v1/services', method: 'GET', params: { categoryId: category.idCategory} })
+                    .then(resp => {
+                        console.log(JSON.stringify(resp.data));
+                        commit('set_servicesByCategory', resp.data)
+                        resolve(resp)
+                        return resp.data;
+                    })
+                    .catch(err => {
+                        localStorage.removeItem('token')
+                        reject(err)
+                    })
+            })
+        },
     },
     getters : {
         isLoggedIn: state => {
@@ -87,6 +124,9 @@ export default new Vuex.Store({
         },
         alertDlg: state => {
             return state.alertDlg
+        },
+        servicesByCategory:state => {
+            return state.servicesBycategory;
         },
     }
 })
