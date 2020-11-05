@@ -12,6 +12,14 @@
           </v-list-item-content>
         </v-list-item>
       </template>
+      <v-list-item ripple @click="logout">
+        <v-list-item-action>
+          <v-icon>fas fa-user</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title class="body-2">{{ $t("drawer.logout") }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </div>
 </template>
@@ -27,7 +35,6 @@ export default {
         {icon: 'fas fa-calendar-plus', text: this.$t("drawer.offerAservice"), action: '/services'},
         {icon: 'fas fa-list', text: this.$t("drawer.offeredServices"), action: '/services'},
         {icon: 'fas fa-users-cog', text: this.$t("drawer.settings"), action: '/'},
-        {icon: 'fas fa-user', text: this.$t("drawer.logout"), action: 'logout'}, // todo: change that
       ]
     }
   },
