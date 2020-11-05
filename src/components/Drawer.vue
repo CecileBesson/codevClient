@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isLoggedIn">
+  <div>
     <v-list dense >
       <template v-for="(item, i) in items">
         <v-divider dark v-if="item.divider" :key="i"></v-divider>
@@ -40,14 +40,8 @@ export default {
   },
   methods:{
     logout: function() {
-      this.$store.dispatch('logout').then(() => {
-        this.$router.push("/auth");
-      });
-    }
-  },
-  computed: {
-    isLoggedIn() {
-      return this.$store.state.auth.status.isLoggedIn;
+      this.$store.dispatch('logout');
+      this.$router.push("/auth");
     }
   }
 }

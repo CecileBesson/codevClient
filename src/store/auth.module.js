@@ -2,8 +2,8 @@ import AuthService from '../services/auth.service';
 
 const token = localStorage.getItem('token');
 const initialState = token
-    ? { status: { isLoggedIn: true } } // todo: load user
-    : { status: { isLoggedIn: false } };
+    ? { isLoggedIn: true, user: null } // todo: load user
+    : { isLoggedIn: false, user: null };
 
 export const auth = {
     state: initialState,
@@ -47,8 +47,8 @@ export const auth = {
             );
         },
         logout({commit}){
-            commit('logout');
             localStorage.removeItem('token');
+            commit('logout');
         }
     },
     getters : {
