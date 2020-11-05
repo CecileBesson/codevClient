@@ -6,11 +6,6 @@
     clipped-left app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title @click="goHome" class="white--text">{{$t("title")}}</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon @click="goAuth">fas fa-sign-in-alt</v-icon>
-      </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" clipped fixed app >
@@ -33,9 +28,6 @@ export default {
   methods: {
     goHome () {
       this.$router.replace('/');
-    },
-    goAuth() {
-      this.$store.dispatch("logout").then(() => console.log("youhou")); // todo: remove that because must use drawer link
     }
   }
 }
