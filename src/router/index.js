@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Auth from '../components/Login.vue'
 import Register from '../components/Register.vue'
-import store from '../store/index.js'
 import Logout from "@/components/Logout";
 
 Vue.use(VueRouter)
@@ -38,14 +37,16 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next()
-      return
-    }
-    next('/auth')
+  const publicPages = ['/auth', '/register'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('token');
+
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !loggedIn) {
+    next('/auth');
   } else {
-    next()
+    next();
   }
 })
 
