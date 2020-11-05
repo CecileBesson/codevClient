@@ -15,14 +15,16 @@
         label="Mot de passe"
         hint="At least 6 characters"
         counter
-    ></v-text-field>
+    ></v-text-field> <!-- todo: use $t !-->
     <v-alert v-if="alertDlg" color="cyan"
              border="left"
              elevation="2"
              colored-border>
       {{$t("alert.authFailed")}}
     </v-alert>
-    <a href="/register">Pas de compte? Inscrivez-vous ici !</a><br/><br/>
+    <p>
+      <router-link to="/register">Pas de compte? Inscrivez-vous ici !</router-link> <!-- todo: use $t !-->
+    </p>
     <v-btn type="submit"  :disabled="!isValid">
       {{ $t("drawer.login") }}
     </v-btn>
@@ -40,9 +42,9 @@ export default {
       password : "",
       isValid: true,
       rules: {
-        required: value => !!value || 'Required.',
-        min: v => v.length >= 6 || 'Min 6 characters',
-        validEmail: value => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'E-mail must be valid'
+        required: value => !!value || 'Required.', // todo: use $t
+        min: v => v.length >= 6 || 'Min 6 characters', // todo: use $t
+        validEmail: value => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'E-mail must be valid' // todo: use $t
       },
     }
   },
