@@ -4,7 +4,7 @@
                src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
     clipped-left app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="isLoggedIn"></v-app-bar-nav-icon>
-      <h3 toolbar-title @click="goHome" class="white--text">{{$t("title")}}</h3>
+      <h3 @click="goHome" class="white--text">{{$t("title")}}</h3>
     </v-app-bar>
 
     <v-navigation-drawer v-if="isLoggedIn" v-model="drawer" clipped fixed app >
