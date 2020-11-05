@@ -41,6 +41,7 @@ export default {
       email : "",
       password : "",
       isValid: true,
+      alertDlg: false,
       rules: {
         required: value => !!value || 'Required.', // todo: use $t
         min: v => v.length >= 6 || 'Min 6 characters', // todo: use $t
@@ -49,17 +50,14 @@ export default {
     }
   },
   computed: {
-    alertDlg() {
-      return this.$store.getters.alertDlg;
-    }
   },
   methods: {
     login: function () {
-      let email = this.email
-      let password = this.password
+      let email = this.email;
+      let password = this.password;
       this.$store.dispatch('auth', { email, password })
           .then(() => this.$router.push('/'))
-          .catch(err => console.log(err))
+          .catch(() => this.alertDlg = true);
     }
   }
 }
@@ -70,8 +68,7 @@ export default {
   width: 500px;
   border: 1px solid #CCCCCC;
   background-color: #FFFFFF;
-  margin: auto;
-  margin-top: 200px;
+  margin: 200px auto auto;
   padding: 25px;
   text-align: center;
 }
@@ -89,8 +86,6 @@ button{
   .title{
     font-size: 45px;
   }
-
-
 }
 
 </style>

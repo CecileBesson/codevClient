@@ -70,8 +70,10 @@ export default {
         password: this.password,
       }
       this.$store.dispatch('register', data)
-          .then(() => this.$router.push('/'))
-          .catch(err => console.log(err))
+          .then(() => {
+            // todo: show -> you must verify our account with the email blablabla
+          })
+          .catch(err => console.log(err)); // todo: real exception handling
     }
   }
 }

@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Auth from '../components/Login.vue'
 import Register from '../components/Register.vue'
-import Logout from "@/components/Logout";
 
 Vue.use(VueRouter)
 
@@ -17,11 +16,6 @@ const routes = [
     path: '/auth',
     name: 'auth',
     component: Auth
-  },
-  {
-    path: '/logout',
-    name: 'logout',
-    component: Logout
   },
   {
     path: '/register',

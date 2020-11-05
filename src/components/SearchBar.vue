@@ -4,7 +4,6 @@
         class="pa-4"
         flat
         height="300px"
-
     >
       <v-toolbar
           dense
@@ -20,7 +19,6 @@
         <v-btn icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-
       </v-toolbar>
     </v-card>
   </div>

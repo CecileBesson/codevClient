@@ -32,10 +32,10 @@ export default {
   },
   methods: {
     goHome () {
-      this.$router.replace('/')
+      this.$router.replace('/');
     },
     goAuth() {
-      this.$router.replace('/auth')
+      this.$store.dispatch("logout").then(() => console.log("youhou")); // todo: remove that because must use drawer link
     }
   }
 }
