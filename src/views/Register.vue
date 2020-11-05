@@ -27,7 +27,7 @@
         label="Mot de passe"
         hint="At least 6 characters"
         counter
-    ></v-text-field>
+    ></v-text-field><!-- todo: use $t !-->
     <v-text-field
         type="password"
         v-model="password_confirmation"
@@ -36,7 +36,7 @@
         label="Confirmation du mot de passe"
         hint="At least 6 characters"
         counter
-    ></v-text-field>
+    ></v-text-field><!-- todo: use $t !-->
     <v-btn type="submit" :disabled="!isValid">
       {{ $t("register.message") }}
     </v-btn>
@@ -55,9 +55,9 @@ export default {
       password_confirmation : "",
       isValid: true,
       rules: {
-        required: v => !!v || 'Required.',
-        min: v => v.length >= 6 || 'Min 6 characters',
-        validEmail: value => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'E-mail must be valid'
+        required: v => !!v || 'Required.', // todo: use $t
+        min: v => v.length >= 6 || 'Min 6 characters', // todo: use $t
+        validEmail: value => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || 'E-mail must be valid' // todo: use $t
       },
     }
   },
@@ -70,8 +70,10 @@ export default {
         password: this.password,
       }
       this.$store.dispatch('register', data)
-          .then(() => this.$router.push('/'))
-          .catch(err => console.log(err))
+          .then(() => {
+            // todo: show -> you must verify our account with the email blablabla
+          })
+          .catch(err => console.log(err)); // todo: real exception handling
     }
   }
 }

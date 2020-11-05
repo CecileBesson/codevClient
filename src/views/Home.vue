@@ -14,12 +14,7 @@ import searchBar from "@/components/SearchBar";
 
 export default {
   name: "Home",
-  components: {searchBar},
-  methods: {
-    getToken(){
-      return localStorage.getItem("token")
-    }
-  }
+  components: {searchBar}
 }
 </script>
 
