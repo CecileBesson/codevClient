@@ -1,21 +1,13 @@
 <template>
   <div>
     <v-app-bar dark
-               prominent
                src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
-               clipped-left app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title @click="goHome" class="white--text">{{$t("title")}}</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon @click="goAuth">fas fa-sign-in-alt</v-icon>
-      </v-btn>
+    clipped-left app>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="isLoggedIn"></v-app-bar-nav-icon>
+      <h3 @click="goHome" class="white--text">{{$t("title")}}</h3>
     </v-app-bar>
 
-
-
-    <v-navigation-drawer v-model="drawer" clipped fixed app >
+    <v-navigation-drawer v-if="isLoggedIn" v-model="drawer" clipped fixed app >
       <myContentDrawer />
     </v-navigation-drawer>
   </div>
@@ -23,14 +15,10 @@
 
 <script>
 import myContentDrawer from "@/components/Drawer"
-//import searchBar from "@/components/SearchBar";
 
 export default {
   name: 'myToolbar',
-  components:{
-    myContentDrawer,
-   // searchBar,
-  },
+  components: {myContentDrawer},
   data: function () {
     return {
       drawer: false
@@ -38,10 +26,12 @@ export default {
   },
   methods: {
     goHome () {
-      this.$router.replace('/')
-    },
-    goAuth() {
-      this.$router.replace('/auth')
+      this.$router.replace('/');
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
     }
   }
 }

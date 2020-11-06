@@ -12,20 +12,10 @@
 
 <script>
 import myToolbar from "@/components/Toolbar";
+
 export default {
   name: 'App',
   components: { myToolbar },
-  computed : {
-    isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
-  },
-  methods: {
-    logout: function () {
-      this.$store.dispatch('logout')
-          .then(() => {
-            this.$router.push('/auth')
-          })
-    },
-  },
   created: function () {
     this.$http.interceptors.response.use(undefined, function (err) {
       // eslint-disable-next-line no-unused-vars

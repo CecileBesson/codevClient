@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../components/Home.vue'
-import Auth from '../components/Login.vue'
-import Register from '../components/Register.vue'
-import store from '../store/index.js'
-import Logout from "@/components/Logout";
+import Home from '../views/Home.vue'
+import Auth from '../views/Login.vue'
+import Register from '../views/Register.vue'
+
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -20,11 +20,6 @@ const routes = [
     component: Auth
   },
   {
-    path: '/logout',
-    name: 'logout',
-    component: Logout
-  },
-  {
     path: '/register',
     name: 'register',
     component: Register
@@ -32,20 +27,23 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next()
-      return
-    }
-    next('/auth')
-  } else {
-    next()
+  const publicPages = ['/auth', '/register'];
+  const authRequired = !publicPages.includes(to.path);
+
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !store.getters.isLoggedIn) {
+    next('/auth');
+  }
+  else if (!authRequired && store.getters.isLoggedIn) {
+    next('/');
+  }
+  else {
+    next();
   }
 })
 
