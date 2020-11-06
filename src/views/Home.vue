@@ -57,7 +57,7 @@ export default {
   },
   computed:{
     categories(){
-      return this.$store.state.categories
+      return this.$store.getters.categories
     },
 
   },
@@ -79,8 +79,8 @@ export default {
       // if ( document.querySelector('body')!=null )  document.querySelector('body').style.overflow = 'auto';
     },
     onClickPicture(category){
-      this.$store.dispatch('getServicesByCategory', category) .then(resp => {
-         this.services=resp.data;
+      this.$store.dispatch('getServicesByCategory', category).then(servicesByCategory => {
+         this.services=servicesByCategory;
          this.currentSelect=category.idCategory;
 
       }) .catch(err => {
