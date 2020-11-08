@@ -22,7 +22,10 @@
   "carousel.animals": "Animaux",
   "carousel.it": "Informatique",
   "carousel.personalCare": "Aide à la personne",
-  "carousel.privateLesson": "Cours particuliers"
+  "carousel.privateLesson": "Cours particuliers",
+  "home.category": "Sélectionner une catégorie: ",
+  "home.serviceList": "Liste des services: ",
+  "home.km": "Dans un rayon de: "
 
 
 

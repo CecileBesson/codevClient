@@ -3,22 +3,25 @@ import ServiceService from '../services/service.service';
 export const service = {
     state: {
         categories: {},
+        servicesByCategory: {},
+        servicesByCategoryAndLocalisation: {}
     },
     mutations: {
         set_categories(state, categories){
             state.categories = categories;
         },
         set_servicesByCategory(state, servicesByCategory){
-            state.servicesBycategory = servicesByCategory;
+            state.servicesByCategory = servicesByCategory;
+        },
+        set_servicesByCategoryAndLocalisation(state, servicesByCategoryAndLocalisation){
+            state.set_servicesByCategoryAndLocalisation = servicesByCategoryAndLocalisation;
         }
     },
     actions: {
         getCategories({commit}){
-            console.log("je suis là")
             return ServiceService.getCategories().then(
                 response => {
                     commit('set_categories', response);
-                   // console.log(JSON.stringify(response))
                     return Promise.resolve(response);
                 },
                 error => {
@@ -36,11 +39,22 @@ export const service = {
                     return Promise.reject(error);
                 }
             )
+        },
+        getServicesByCategoryAndLocalisation({commit}, payload){
+            return ServiceService.getServicesByCategoryAndLocalisation(payload.category,payload.latitude, payload.longitude, payload.perimeter).then(
+                response => {
+                    commit('set_servicesByCategoryAndLocalisation', response);
+                    return Promise.resolve(response);
+                },
+                error => {
+                    return Promise.reject(error);
+                }
+            )
         }
     },
     getters : {
         servicesByCategory:state => {
-            return state.servicesBycategory;
+            return state.servicesByCategory;
         },
         categories:state => {
             return state.categories;
