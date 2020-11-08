@@ -30,7 +30,7 @@ export default {
   data: function () {
     return {
       items: [
-        {icon: 'fas fa-comments', text: this.$t("drawer.mailbox"), action: '/'},
+        {icon: 'fas fa-comments', text: this.$t("drawer.mailbox"), action: '/messages'},
         {icon: 'fas fa-calendar-alt', text: this.$t("drawer.services"), action: '/services'},
         {icon: 'fas fa-calendar-plus', text: this.$t("drawer.offerAservice"), action: '/services'},
         {icon: 'fas fa-list', text: this.$t("drawer.offeredServices"), action: '/services'},

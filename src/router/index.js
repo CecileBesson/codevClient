@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Auth from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import AllMessages from '../views/AllMessages.vue'
 
 import store from '../store/index'
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/messages',
+    name: 'messages',
+    component: AllMessages
   }
 ]
 

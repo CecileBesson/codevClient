@@ -13,6 +13,9 @@
   "login.password": "Entrez votre mot de passe",
   "home.welcome": "Bienvenue !",
   "register.message" : "S'enregistrer",
-  "alert.authFailed": "L'adresse mail ou le mot de passe est incorrect"
+  "alert.authFailed": "L'adresse mail ou le mot de passe est incorrect",
+
+  "allMessages.you": "Vous",
+  "allMessages.empty": "Vous n'avez aucun messages."
 
 }
