@@ -7,6 +7,8 @@ import store from './store'
 import Axios from 'axios'
 import VueCarousel from 'vue-carousel';
 
+
+
 Vue.use(VueCarousel);
 Vue.config.productionTip = false
 
@@ -18,6 +20,7 @@ if (token) {
 }
 
 
+
 new Vue({
   vuetify,
   router,
@@ -26,6 +29,4 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-
-export const eventBus = new Vue();
 

@@ -15,7 +15,7 @@ import myToolbar from "@/components/Toolbar";
 
 export default {
   name: 'App',
-  components: { myToolbar },
+  components: { myToolbar},
   created: function () {
     this.$http.interceptors.response.use(undefined, function (err) {
       // eslint-disable-next-line no-unused-vars
