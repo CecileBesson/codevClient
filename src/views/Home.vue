@@ -108,7 +108,7 @@ export default {
       })
     },
     onSelectedCategory(category, service){
-      this.category = category;
+      this.currentCategory = category;
       this.services = service;
       this.mapKey ++;
     }
