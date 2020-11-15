@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Auth from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import OfferAservice from "@/views/OfferAservice";
 
 import store from '../store/index'
 
@@ -18,6 +19,11 @@ const routes = [
     path: '/auth',
     name: 'auth',
     component: Auth
+  },
+  {
+    path: '/offerAService',
+    name: 'offerAService',
+    component: OfferAservice
   },
   {
     path: '/register',

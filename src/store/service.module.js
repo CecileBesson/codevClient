@@ -1,10 +1,10 @@
 import ServiceService from '../services/service.service';
-
 export const service = {
     state: {
         categories: {},
         servicesByCategory: {},
-        servicesByCategoryAndLocalisation: {}
+        servicesByCategoryAndLocalisation: {},
+        serviceCreationError: false
     },
     mutations: {
         set_categories(state, categories){
@@ -15,6 +15,9 @@ export const service = {
         },
         set_servicesByCategoryAndLocalisation(state, servicesByCategoryAndLocalisation){
             state.set_servicesByCategoryAndLocalisation = servicesByCategoryAndLocalisation;
+        },
+        createService_error(state){
+            state.serviceCreationError= true;
         }
     },
     actions: {
@@ -50,6 +53,18 @@ export const service = {
                     return Promise.reject(error);
                 }
             )
+        },
+        createService({commit}, newService){
+            console.log("=========" + JSON.stringify(newService))
+            return ServiceService.createService(newService).then(
+                () => {
+                    // ???
+                },
+                error => {
+                    commit('createService_error');
+                    return Promise.reject(error);
+                }
+            );
         }
     },
     getters : {

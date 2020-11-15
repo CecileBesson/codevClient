@@ -35,6 +35,15 @@ class ServiceService {
                 return response.data;
             });
     }
+    createService(newService){
+        return axios
+            .post(API_URL + "services", newService, {
+                headers: authHeader()
+            })
+            .then(response => {
+            return response.data
+        });
+    }
 }
 
 export default new ServiceService();
