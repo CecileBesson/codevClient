@@ -103,6 +103,7 @@ export default {
          this.$store.dispatch('getServicesByCategoryAndLocalisation', {category, latitude, longitude, perimeter} )
           .then(servicesByCategoryAndLocalisation => {
             this.services=servicesByCategoryAndLocalisation;
+            this.mapKey++;
           }) .catch(err => {
         console.log(err);
       })
