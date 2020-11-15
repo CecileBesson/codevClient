@@ -10,10 +10,10 @@
       {{ $t("home.serviceList")}}
     </h5>
     <div>
-        <v-btn icon width="48" height="48">
+        <v-btn icon width="48" height="48" @click="showList = true">
           <v-icon> fas fa-list-ul</v-icon>
         </v-btn>
-      <v-btn icon width="48" height="48" @click="mapMode()">
+      <v-btn icon width="48" height="48" @click="showList = false">
         <v-icon>fas fa-map-marker-alt</v-icon>
         </v-btn>
     </div>
@@ -33,8 +33,11 @@
 
     </div>
     <v-row style="padding-left:20px">
-      <HomeList :services="services"/>
+      <HomeList v-if="showList" :services="services"/>
     </v-row>
+    <div v-if="!showList">
+      <HomeMap :key="mapKey" :services="services"/>
+    </div>
   </div>
 
 
@@ -43,6 +46,7 @@
 
 import HomeList from "@/components/HomeList";
 import CategoryCarousel from "@/components/CategoryCarousel";
+import HomeMap from "@/components/HomeMap";
 
 export default {
   name: "Home",
@@ -53,15 +57,14 @@ export default {
       gettingLocation: false,
       errorStr:null,
       perimeter: 0,
+      showList: true,
+      mapKey: 1
     }
   },
   computed:{
     categories(){
       return this.$store.getters.categories
     },
-   /* services(){
-      return this.$store.getters.servicesByCategory
-    }*/
   },
   created() {
     if(!("geolocation" in navigator)) {
@@ -80,11 +83,11 @@ export default {
       this.errorStr = err.message;
     })
     this.$store.dispatch('getCategories');
-    console.log(JSON.stringify(this.$store.getters.categories));
   },
   components: {
     CategoryCarousel,
-    HomeList
+    HomeList,
+    HomeMap
   },
   methods: {
     getLatitude(){
@@ -105,9 +108,9 @@ export default {
       })
     },
     onSelectedCategory(category, service){
-      console.log("services" + JSON.stringify(service));
       this.category = category;
       this.services = service;
+      this.mapKey ++;
     }
 
   }
