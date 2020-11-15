@@ -117,10 +117,20 @@ export default {
 }
 </script>
 <style scoped>
-h5{
-  padding-top: 10px;
-  margin-left: 5px;
+@Media screen and (max-width: 500px) {
+  h5{
+    padding-top: 10px;
+    margin-left: 5px;
+    font-size: 12px;
+  }
+}
 
+@Media screen and (min-width:500px) {
+  h5{
+    padding-top: 10px;
+    margin-left: 5px;
+    font-size: 25px;
+  }
 }
 
 .km{
