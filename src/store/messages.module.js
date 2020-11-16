@@ -2,11 +2,15 @@ import MessagesService from '../services/messages.service';
 
 export const messages = {
     state: {
-        conversations: []
+        conversations: [],
+        totalUnreadMessages: 0
     },
     mutations: {
         conversations_loaded(state, conversations){
             state.conversations = conversations;
+            var cpt = 0;
+            conversations.forEach(element => cpt += element.unreadMessagesNumber);
+            state.totalUnreadMessages = cpt;
         },
     },
     actions: {
@@ -36,6 +40,9 @@ export const messages = {
     getters : {
         conversations: state => {
             return state.conversations;
+        },
+        totalUnreadMessages: state => {
+            return state.totalUnreadMessages;
         }
     }
 };
