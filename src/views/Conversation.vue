@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <div>Future popup</div> -->
-    <div class="d-inline-flex pa-2 topNav">
+    <div class="d-inline-flex pa-2 topNav" id="topLink">
       <router-link to="/messages">
         <v-icon class="mr-2">
         mdi-keyboard-backspace
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div id="bottomContainer">
+      <div id="bottomContainer" class="pa-2">
         <textarea
             rows="3"
             id="textarea"
@@ -85,7 +85,13 @@ export default {
   },
   updated() {
       var div = document.getElementById("messageBlock");
+      div.style.height = (
+          window.innerHeight
+          - document.getElementsByClassName("v-app-bar")[0].offsetHeight
+          - document.getElementById("topLink").offsetHeight
+          - document.getElementById("bottomContainer").offsetHeight) + "px";
       div.scrollTop = div.scrollHeight;
+
   }
 }
 </script>
@@ -125,6 +131,7 @@ export default {
   padding: 2px 10px;
   font-size: 1em !important;
   font-family: "Roboto", sans-serif;
+  white-space: pre-wrap;
 }
 .date {
   margin-right: 10px;
@@ -137,12 +144,12 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 80vh;
 }
 #bottomContainer {
   display: flex;
   padding-left: 10px;
   padding-right: 10px;
+  align-items: center;
 }
 #bottomContainer textarea {
   border: 1px solid #9e9e9e;
