@@ -1,7 +1,14 @@
 <template>
   <div>
     <!-- <div>Future popup</div> -->
-    <!-- todo: petite flèche retour -->
+    <div class="d-inline-flex pa-2 topNav">
+      <router-link to="/messages">
+        <v-icon class="mr-2">
+        mdi-keyboard-backspace
+        </v-icon>
+      </router-link>
+      <h3>{{ serviceTitle }}</h3>
+    </div>
     <div id="conversationContainer">
       <div id="messageBlock">
         <div v-for="message in currentConversationMessages" :key="message.idMessage">
@@ -18,7 +25,7 @@
             rows="3"
             id="textarea"
         ></textarea>
-        <v-icon @click="send()" class="ml-2" aria-label="My Account" role="img" aria-hidden="false">
+        <v-icon @click="send()" class="ml-2" role="img">
           mdi-send
         </v-icon>
       </div>
@@ -42,12 +49,16 @@ export default {
         return conv.lastMessage.idSender;
       }
       return conv.lastMessage.idReceiver;
+    },
+    serviceTitle() {
+      let conv = this.$store.getters.conversation;
+      if(conv === null) {
+        return "";
+      }
+      return conv.service.name;
     }
   },
   methods: {
-    formatTest(text) {
-      return text.replace(/\n/g, "<br />");
-    },
     formatDate(date) {
       let d = new Date(date);
       let time = [
@@ -80,6 +91,12 @@ export default {
 </script>
 
 <style scoped>
+.topNav {
+  width: 100%;
+}
+.topNav a {
+  text-decoration: none !important;
+}
 #messageBlock {
   overflow: scroll;
   padding-top: 10px;
@@ -120,7 +137,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 90vh;
+  height: 80vh;
 }
 #bottomContainer {
   display: flex;
