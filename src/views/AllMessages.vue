@@ -2,23 +2,25 @@
   <div>
     <h1 class="ma-4">{{ $t("drawer.mailbox") }}</h1>
     <div class="convContainer" v-for="conversation in conversations" :key="conversation.service.idService">
-      <div class="pa-3 conversationBlock">
-        <v-badge
-            color="blue"
-            :content="conversation.unreadMessagesNumber"
-            offset-x="-5"
-            offset-y="17"
-            class="title mb-2"
-            :value="conversation.unreadMessagesNumber > 0"
-        >
-          {{ conversation.service.name }}
-        </v-badge>
-        <p class="ma-0 text" :class="[
-            conversation.unreadMessagesNumber > 0 ? 'unreadMessage' : '',
-          ]">
-          <strong>{{ conversation.lastToSpeak ? $t("allMessages.you") + " : " : "" }}</strong>{{ conversation.lastMessage.text }}
-        </p>
-      </div>
+      <router-link class="link" :to='"conversation/"+conversation.service.idService'>
+        <div class="pa-3 conversationBlock">
+          <v-badge
+              color="blue"
+              :content="conversation.unreadMessagesNumber"
+              offset-x="-5"
+              offset-y="17"
+              class="title mb-2"
+              :value="conversation.unreadMessagesNumber > 0"
+          >
+            {{ conversation.service.name }}
+          </v-badge>
+          <p class="ma-0 text" :class="[
+              conversation.unreadMessagesNumber > 0 ? 'unreadMessage' : '',
+            ]">
+            <strong>{{ conversation.lastToSpeak ? $t("allMessages.you") + " : " : "" }}</strong>{{ conversation.lastMessage.text }}
+          </p>
+        </div>
+      </router-link>
     </div>
     <p class="ml-3" v-if="conversations.length === 0">
       {{ $t("allMessages.empty") }}
@@ -45,6 +47,10 @@ export default {
 .text {
   overflow: hidden;
   height: 25px;
+}
+.link {
+  color: black;
+  text-decoration: none;
 }
 .unreadMessage {
   font-weight: bold;
