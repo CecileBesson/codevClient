@@ -19,6 +19,9 @@
             </div>
           </div>
         </div>
+        <div v-show="seen" id="viewBar">
+          <span>{{ $t("messages.seen") }}</span>
+        </div>
       </div>
       <div id="bottomContainer" class="pa-2">
         <textarea
@@ -56,6 +59,13 @@ export default {
         return "";
       }
       return conv.service.name;
+    },
+    seen() {
+      let conv = this.$store.getters.conversation;
+      if(conv === null) {
+        return false
+      }
+      return conv.lastToSpeak && conv.lastMessage.readByReceiver;
     }
   },
   methods: {
@@ -116,6 +126,12 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+#viewBar {
+  position: relative;
+  bottom: 20px;
+  font-size: 0.8em;
+  margin-left: 10px;
 }
 #bottomContainer .v-textarea textarea {
   font-size: 16px !important;

@@ -16,6 +16,7 @@
   "alert.authFailed": "L'adresse mail ou le mot de passe est incorrect",
 
   "allMessages.you": "Vous",
-  "allMessages.empty": "Vous n'avez aucun messages."
+  "allMessages.empty": "Vous n'avez aucun messages.",
+  "messages.seen": "Vu"
 
 }

@@ -14,11 +14,16 @@
           >
             {{ conversation.service.name }}
           </v-badge>
-          <p class="ma-0 text" :class="[
-              conversation.unreadMessagesNumber > 0 ? 'unreadMessage' : '',
-            ]">
-            <strong>{{ conversation.lastToSpeak ? $t("allMessages.you") + " : " : "" }}</strong>{{ conversation.lastMessage.text }}
-          </p>
+          <div class="textContainer">
+            <p class="ma-0 text" :class="[
+                conversation.unreadMessagesNumber > 0 ? 'unreadMessage' : '',
+              ]">
+              <strong>{{ conversation.lastToSpeak ? $t("allMessages.you") + " : " : "" }}</strong>{{ conversation.lastMessage.text }}
+            </p>
+            <v-icon class="ml-1" v-show="conversation.lastToSpeak && conversation.lastMessage.readByReceiver">
+              mdi-check
+            </v-icon>
+          </div>
         </div>
       </router-link>
     </div>
@@ -45,8 +50,9 @@ export default {
   font-size: 1.5em !important;
 }
 .text {
+  text-overflow: ellipsis;
   overflow: hidden;
-  height: 25px;
+  white-space: nowrap;
 }
 .link {
   color: black;
@@ -60,5 +66,11 @@ export default {
 }
 .convContainer:last-child div {
   border-bottom: 1px solid #dcdcdc;
+}
+.textContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border: none !important;
 }
 </style>
