@@ -1,4 +1,5 @@
 import MessagesService from '../services/messages.service';
+import AppointmentsService from '../services/appointments.service';
 import router from '../router/index'
 
 export const messages = {
@@ -6,7 +7,8 @@ export const messages = {
         conversations: [],
         totalUnreadMessages: 0,
         currentConversationMessages: [],
-        conversation: null
+        conversation: null,
+        appointmentsForCurrentConversation: []
     },
     mutations: {
         conversations_loaded(state, conversations){
@@ -18,6 +20,9 @@ export const messages = {
         current_conversation_loaded(state, payload) {
             state.currentConversationMessages = payload.conv;
             state.conversation = payload.conversation;
+        },
+        current_appointments_loaded(state, appointments) {
+            state.appointmentsForCurrentConversation = appointments;
         }
     },
     actions: {
@@ -68,6 +73,61 @@ export const messages = {
                 }
             )
         },
+        loadAppointmentsForCurrentConversation({state, commit}, idUser) {
+            return AppointmentsService.getAppointmentsForConversation(state.conversation.service.idService, idUser).then(
+                appointments => {
+                    commit("current_appointments_loaded", appointments);
+                }
+            );
+        },
+        deleteAppointment({dispatch, state}, idAppointment) {
+            return AppointmentsService.deleteAppointment(idAppointment).then(
+                () => {
+                    let userId;
+                    let conv = state.conversation;
+                    if(conv.service.user.idUser === conv.lastMessage.idSender) {
+                        userId = conv.lastMessage.idReceiver;
+                    }
+                    else {
+                        userId = conv.lastMessage.idSender;
+                    }
+                    dispatch('loadAppointmentsForCurrentConversation', userId, {root: true});
+                    return Promise.resolve();
+                }
+            );
+        },
+        acceptAppointment({dispatch, state}, idAppointment) {
+            return AppointmentsService.acceptAppointment(idAppointment).then(
+                () => {
+                    let userId;
+                    let conv = state.conversation;
+                    if(conv.service.user.idUser === conv.lastMessage.idSender) {
+                        userId = conv.lastMessage.idReceiver;
+                    }
+                    else {
+                        userId = conv.lastMessage.idSender;
+                    }
+                    dispatch('loadAppointmentsForCurrentConversation', userId, {root: true});
+                    return Promise.resolve();
+                }
+            );
+        },
+        newAppointment({dispatch, state}, payload) {
+            return AppointmentsService.newAppointment(payload.date, payload.startHour, state.conversation.service.idService).then(
+                () => {
+                    let userId;
+                    let conv = state.conversation;
+                    if(conv.service.user.idUser === conv.lastMessage.idSender) {
+                        userId = conv.lastMessage.idReceiver;
+                    }
+                    else {
+                        userId = conv.lastMessage.idSender;
+                    }
+                    dispatch('loadAppointmentsForCurrentConversation', userId, {root: true});
+                    return Promise.resolve();
+                }
+            );
+        },
         sendNewMessage({state}, text) {
             let idReceiver;
             if(state.conversation.lastToSpeak) {
@@ -91,6 +151,9 @@ export const messages = {
         },
         conversation : state => {
             return state.conversation;
+        },
+        appointmentsForCurrentConversation: state => {
+            return state.appointmentsForCurrentConversation;
         }
     }
 };
