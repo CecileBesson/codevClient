@@ -20,6 +20,17 @@ class AppointmentsService {
         return axios
             .post(API_URL + "appointments/" + idAppointment + "/accepted", null,{ headers: authHeader() });
     }
+    newAppointment(date, startHour, idService) {
+        return axios.post(API_URL + "appointments", {
+            date: date,
+            startHour: startHour + ":00",
+            idService: idService
+        }, { headers: authHeader() }).then(
+            () => {
+                return Promise.resolve();
+            }
+        )
+    }
 }
 
 export default new AppointmentsService();

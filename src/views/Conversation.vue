@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <div>Future popup</div> -->
     <div class="d-inline-flex pa-2 topNav" id="topLink">
       <router-link to="/messages">
         <v-icon class="mr-2">
@@ -25,21 +24,132 @@
       </div>
       <div id="bottomContainer" class="pa-2">
         <div>
-          <v-btn
-            small
-            rounded
-            color="primary"
-            v-show="canAskMeeting"
-            class="mb-2"
+          <v-dialog
+              v-model="showNewAppointment"
+              persistent
+              max-width="600px"
+              v-show="canAskMeeting"
           >
-            {{ $t("messages.newAppointment.button") }}
-            <v-icon
-                right
-                dark
-            >
-              mdi-calendar-clock
-            </v-icon>
-          </v-btn>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                  small
+                  rounded
+                  color="primary"
+                  v-show="canAskMeeting"
+                  class="mb-2"
+                  v-bind="attrs"
+                  v-on="on"
+              >
+                {{ $t("messages.newAppointment.button") }}
+                <v-icon
+                    right
+                    dark
+                >
+                  mdi-calendar-clock
+                </v-icon>
+              </v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">{{ $t("messages.newAppointment.title") }}</span>
+              </v-card-title>
+              <v-card-text>
+                <v-form ref="form">
+                  <v-row>
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-menu
+                          ref="menu1"
+                          v-model="menu1"
+                          :close-on-content-click="false"
+                          transition="scale-transition"
+                          offset-y
+                          max-width="290px"
+                          min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                              v-model="dateFormatted"
+                              :label="$i18n.t('messages.dialog.date')+'*'"
+                              persistent-hint
+                              prepend-icon="mdi-calendar"
+                              v-bind="attrs"
+                              @blur="date = parseDate(dateFormatted)"
+                              v-on="on"
+                              :rules="dateRules"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                            v-model="date"
+                            no-title
+                            :min="minAllowedDate"
+                            @input="menu1 = false"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
+
+                    <v-col
+                        cols="12"
+                        sm="6"
+                        md="4"
+                    >
+                      <v-menu
+                          ref="menu"
+                          v-model="menu2"
+                          :close-on-content-click="false"
+                          :nudge-right="40"
+                          :return-value.sync="time"
+                          transition="scale-transition"
+                          offset-y
+                          max-width="290px"
+                          min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                              v-model="time"
+                              :label="$i18n.t('messages.dialog.hour')+'*'"
+                              prepend-icon="mdi-clock-time-four-outline"
+                              readonly
+                              v-bind="attrs"
+                              v-on="on"
+                              :rules="timeRules"
+                          ></v-text-field>
+                        </template>
+                        <v-time-picker
+                            v-if="menu2"
+                            v-model="time"
+                            full-width
+                            @click:minute="$refs.menu.save(time)"
+                        ></v-time-picker>
+                      </v-menu>
+                    </v-col>
+                  </v-row>
+                </v-form>
+                <small>{{ $t("messages.dialog.small") }}</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="showNewAppointment = false"
+                >
+                  {{ $t("messages.abort.button") }}
+                </v-btn>
+                <v-btn
+                    color="blue darken-1"
+                    text
+                    @click="newProposal"
+                >
+                  {{ $t("messages.dialog.new.button") }}
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
           <div v-show="hasProposedAnAppointment">
             <div v-if="lastAppointment !== null && !lastAppointment.accepted" class="d-inline-flex justify-space-between align-center pa-1">
               <p class="pa-0 ma-0">
@@ -73,14 +183,25 @@
               <p class="ma-0 pa-0">
                 {{ $t("messages.appointmentProposed") }} <strong>{{ formatDateOnly(lastAppointment.date) }}</strong> {{ $t("messages.at") }} <strong>{{ lastAppointment.startHour.substr(0, 5) }}</strong>.
               </p>
-              <v-btn
-                  small
-                  rounded
-                  color="success"
-                  @click="acceptAppointment"
-              >
-                {{ $t("messages.accept.button") }}
-              </v-btn>
+              <div class="d-flex flex-column">
+                <v-btn
+                    small
+                    rounded
+                    color="success"
+                    @click="acceptAppointment"
+                    class="mb-1"
+                >
+                  {{ $t("messages.accept.button") }}
+                </v-btn>
+                <v-btn
+                    small
+                    rounded
+                    color="error"
+                    @click="deleteAppointment"
+                >
+                  {{ $t("messages.decline.button") }}
+                </v-btn>
+              </div>
             </div>
             <div v-if="lastAppointment !== null && lastAppointment.accepted" class="d-inline-flex justify-space-between align-center pa-1">
               <p class="pa-0 ma-0">
@@ -114,10 +235,39 @@
 <script>
 export default {
   name: "Conversation",
+  data: vm => ({
+    showNewAppointment: false,
+    date: new Date().toISOString().substr(0, 10),
+    time: null,
+    dateFormatted: vm.formatDate2(new Date().toISOString().substr(0, 10)),
+    menu1: false,
+    menu2: false,
+    timeRules: [
+      v => (v || '').length > 0 || vm.$i18n.t("messages.dialog.error")
+    ],
+    dateRules: [
+      v => (v || '').length > 0 || vm.$i18n.t("messages.dialog.error"),
+      v => {
+        const date = new Date(vm.parseDate(v));
+        if(date <= new Date()) {
+          return vm.$i18n.t("messages.dialog.date.error");
+        }
+        return true;
+      }
+    ]
+  }),
   props: {
     idConversation: String
   },
   computed: {
+    minAllowedDate() {
+      var date = new Date();
+      date.setDate(date.getDate() + 1);
+      return this.parseDate(this.formatDateOnly(date.toISOString()));
+    },
+    computedDateFormatted () {
+      return this.formatDate(this.date)
+    },
     currentConversationMessages() {
       return this.$store.getters.currentConversationMessages;
     },
@@ -196,7 +346,22 @@ export default {
       return false;
     }
   },
+  watch: {
+    date () {
+      this.dateFormatted = this.formatDate2(this.date)
+    },
+  },
   methods: {
+    formatDate2 (date) {
+      if (!date) return null
+      const [year, month, day] = date.split('-')
+      return `${day}/${month}/${year}`
+    },
+    parseDate (date) {
+      if (!date) return null
+      const [day, month, year] = date.split('/')
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    },
     formatDateOnly(date) {
       return (date.substr(8,2) + "/" + date.substr(5, 2) + "/" + date.substr(0,4));
     },
@@ -227,6 +392,18 @@ export default {
     },
     acceptAppointment() {
       this.$store.dispatch('acceptAppointment', this.lastAppointment.idAppointment);
+    },
+    newProposal() {
+      if (this.$refs.form.validate()) {
+        this.$store.dispatch('newAppointment', {
+          date: this.date,
+          startHour: this.time
+        }).then(
+            () => {
+              this.showNewAppointment = false;
+            }
+        );
+      }
     }
   },
   created() {

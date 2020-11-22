@@ -22,9 +22,17 @@
   "messages.appointmentAsked": "Rendez-vous proposé le ",
   "messages.appointmentAccepted": "Rendez-vous accepté le ",
   "messages.appointmentProposed": "Rendez-vous proposé le ",
-  "messages.appointmentToken": "Rendez-vous pris le ",
+  "messages.appointmentTaken": "Rendez-vous pris le ",
+  "messages.newAppointment.title": "Nouvelle proposition de rendez-vous",
   "messages.at": " à ",
   "messages.abort.button": "Annuler",
-  "messages.accept.button": "Accepter"
+  "messages.decline.button": "Refuser",
+  "messages.accept.button": "Accepter",
+  "messages.dialog.date": "Date",
+  "messages.dialog.hour": "Heure",
+  "messages.dialog.small": "* champs obligatoires",
+  "messages.dialog.new.button": "Proposer",
+  "messages.dialog.error": "Vous devez renseigner ce champ",
+  "messages.dialog.date.error": "Vous devez renseigner une date à partir de demain"
 
 }

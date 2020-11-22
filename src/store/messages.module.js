@@ -112,6 +112,22 @@ export const messages = {
                 }
             );
         },
+        newAppointment({dispatch, state}, payload) {
+            return AppointmentsService.newAppointment(payload.date, payload.startHour, state.conversation.service.idService).then(
+                () => {
+                    let userId;
+                    let conv = state.conversation;
+                    if(conv.service.user.idUser === conv.lastMessage.idSender) {
+                        userId = conv.lastMessage.idReceiver;
+                    }
+                    else {
+                        userId = conv.lastMessage.idSender;
+                    }
+                    dispatch('loadAppointmentsForCurrentConversation', userId, {root: true});
+                    return Promise.resolve();
+                }
+            );
+        },
         sendNewMessage({state}, text) {
             let idReceiver;
             if(state.conversation.lastToSpeak) {
