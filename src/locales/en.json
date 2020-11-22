@@ -17,6 +17,14 @@
 
   "allMessages.you": "Vous",
   "allMessages.empty": "Vous n'avez aucun messages.",
-  "messages.seen": "Vu"
+  "messages.seen": "Vu",
+  "messages.newAppointment.button": "Proposez un rendez-vous",
+  "messages.appointmentAsked": "Rendez-vous proposé le ",
+  "messages.appointmentAccepted": "Rendez-vous accepté le ",
+  "messages.appointmentProposed": "Rendez-vous proposé le ",
+  "messages.appointmentToken": "Rendez-vous pris le ",
+  "messages.at": " à ",
+  "messages.abort.button": "Annuler",
+  "messages.accept.button": "Accepter"
 
 }

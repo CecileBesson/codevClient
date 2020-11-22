@@ -24,13 +24,88 @@
         </div>
       </div>
       <div id="bottomContainer" class="pa-2">
-        <textarea
-            rows="3"
-            id="textarea"
-        ></textarea>
-        <v-icon @click="send()" class="ml-2" role="img">
-          mdi-send
-        </v-icon>
+        <div>
+          <v-btn
+            small
+            rounded
+            color="primary"
+            v-show="canAskMeeting"
+            class="mb-2"
+          >
+            {{ $t("messages.newAppointment.button") }}
+            <v-icon
+                right
+                dark
+            >
+              mdi-calendar-clock
+            </v-icon>
+          </v-btn>
+          <div v-show="hasProposedAnAppointment">
+            <div v-if="lastAppointment !== null && !lastAppointment.accepted" class="d-inline-flex justify-space-between align-center pa-1">
+              <p class="pa-0 ma-0">
+                {{ $t("messages.appointmentAsked") }} <strong>{{ formatDateOnly(lastAppointment.date) }}</strong> {{ $t("messages.at") }} <strong>{{ lastAppointment.startHour.substr(0, 5) }}</strong>.
+              </p>
+              <v-btn
+                  small
+                  rounded
+                  color="error"
+                  @click="deleteAppointment"
+              >
+                {{ $t("messages.abort.button") }}
+              </v-btn>
+            </div>
+            <div v-if="lastAppointment !== null && lastAppointment.accepted" class="d-inline-flex justify-space-between align-center pa-1">
+              <p class="pa-0 ma-0">
+                {{ $t("messages.appointmentAccepted") }} <strong>{{ formatDateOnly(lastAppointment.date) }}</strong> {{ $t("messages.at") }} <strong>{{ lastAppointment.startHour.substr(0, 5) }}</strong>.
+              </p>
+              <v-btn
+                  small
+                  rounded
+                  color="error"
+                  @click="deleteAppointment"
+              >
+                {{ $t("messages.abort.button") }}
+              </v-btn>
+            </div>
+          </div>
+          <div v-show="appointmentIsProposed">
+            <div v-if="lastAppointment !== null && !lastAppointment.accepted" class="d-inline-flex justify-space-between align-center pa-1">
+              <p class="ma-0 pa-0">
+                {{ $t("messages.appointmentProposed") }} <strong>{{ formatDateOnly(lastAppointment.date) }}</strong> {{ $t("messages.at") }} <strong>{{ lastAppointment.startHour.substr(0, 5) }}</strong>.
+              </p>
+              <v-btn
+                  small
+                  rounded
+                  color="success"
+                  @click="acceptAppointment"
+              >
+                {{ $t("messages.accept.button") }}
+              </v-btn>
+            </div>
+            <div v-if="lastAppointment !== null && lastAppointment.accepted" class="d-inline-flex justify-space-between align-center pa-1">
+              <p class="pa-0 ma-0">
+                {{ $t("messages.appointmentTaken") }} <strong>{{ formatDateOnly(lastAppointment.date) }}</strong> {{ $t("messages.at") }} <strong>{{ lastAppointment.startHour.substr(0, 5) }}</strong>.
+              </p>
+              <v-btn
+                  small
+                  rounded
+                  color="error"
+                  @click="deleteAppointment"
+              >
+                {{ $t("messages.abort.button") }}
+              </v-btn>
+            </div>
+          </div>
+        </div>
+        <div id="sendMessageContainer">
+          <textarea
+              rows="3"
+              id="textarea"
+          ></textarea>
+          <v-icon @click="send()" class="ml-2" role="img">
+            mdi-send
+          </v-icon>
+        </div>
       </div>
     </div>
   </div>
@@ -66,9 +141,65 @@ export default {
         return false
       }
       return conv.lastToSpeak && conv.lastMessage.readByReceiver;
+    },
+    isAsker() {
+      let conv = this.$store.getters.conversation;
+      if(conv === null) {
+        return false
+      }
+      return conv.service.user.idUser !== this.idCurrentUser;
+    },
+    canAskMeeting() {
+      if(this.isAsker) {
+        const lastAppointment = this.lastAppointment;
+        if(lastAppointment === null) {
+          return true;
+        }
+        // if the last one is passed
+        else if (new Date(lastAppointment.date + " " + lastAppointment.startHour) < new Date()) {
+          return true;
+        }
+      }
+      return false;
+    },
+    hasProposedAnAppointment() {
+      if(this.isAsker) {
+        const lastAppointment = this.lastAppointment;
+        if(lastAppointment === null) {
+          return false;
+        }
+        // if the last one is not passed
+        else if (new Date(lastAppointment.date + " " + lastAppointment.startHour) > new Date()) {
+          return true;
+        }
+      }
+      return false;
+    },
+    lastAppointment() {
+      let appointments = JSON.parse(JSON.stringify(this.$store.getters.appointmentsForCurrentConversation));
+      if(appointments.length === 0) {
+        return null;
+      }
+      return appointments[appointments.length-1];
+    },
+    appointmentIsProposed() {
+      if(!this.isAsker) {
+        const lastAppointment = this.lastAppointment;
+        if(lastAppointment === null) {
+          return false;
+        }
+        // the last is not passed
+        else if (new Date(lastAppointment.date + " " + lastAppointment.startHour) > new Date()) {
+          return true;
+        }
+      }
+      return false;
     }
   },
   methods: {
+    formatDateOnly(date) {
+      return (date.substr(8,2) + "/" + date.substr(5, 2) + "/" + date.substr(0,4));
+    },
     formatDate(date) {
       let d = new Date(date);
       let time = [
@@ -82,16 +213,36 @@ export default {
     },
     send() {
       let text = document.getElementById("textarea").value;
-      this.$store.dispatch('sendNewMessage', text).then(
-          () => {
-            this.$store.dispatch('getCurrentConversation', this.idConversation);
-            document.getElementById("textarea").value = "";
-          }
-      )
+      if(text !== " " && text !== "") {
+        this.$store.dispatch('sendNewMessage', text).then(
+            () => {
+              this.$store.dispatch('getCurrentConversation', this.idConversation);
+              document.getElementById("textarea").value = "";
+            }
+        )
+      }
+    },
+    deleteAppointment() {
+      this.$store.dispatch('deleteAppointment', this.lastAppointment.idAppointment);
+    },
+    acceptAppointment() {
+      this.$store.dispatch('acceptAppointment', this.lastAppointment.idAppointment);
     }
   },
   created() {
-    this.$store.dispatch('getCurrentConversation', this.idConversation);
+    this.$store.dispatch('getCurrentConversation', this.idConversation).then(
+        () => {
+          let userId;
+          let conv = this.$store.getters.conversation;
+          if(conv.service.user.idUser === conv.lastMessage.idSender) {
+            userId = conv.lastMessage.idReceiver;
+          }
+          else {
+            userId = conv.lastMessage.idSender;
+          }
+          this.$store.dispatch('loadAppointmentsForCurrentConversation', userId);
+        }
+    )
   },
   updated() {
       var div = document.getElementById("messageBlock");
@@ -165,7 +316,13 @@ export default {
   display: flex;
   padding-left: 10px;
   padding-right: 10px;
+  flex-direction: column;
   align-items: center;
+}
+#sendMessageContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 #bottomContainer textarea {
   border: 1px solid #9e9e9e;
