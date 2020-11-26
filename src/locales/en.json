@@ -48,6 +48,9 @@
   "messages.dialog.small": "* champs obligatoires",
   "messages.dialog.new.button": "Proposer",
   "messages.dialog.error": "Vous devez renseigner ce champ",
-  "messages.dialog.date.error": "Vous devez renseigner une date à partir de demain"
+  "messages.dialog.date.error": "Vous devez renseigner une date à partir de demain",
+
+  "settings.message": "Modifiez vos paramètres de compte",
+  "settings.submit": "Enregister les modifications"
 
 }

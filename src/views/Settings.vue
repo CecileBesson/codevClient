@@ -1,20 +1,21 @@
 <template>
-  <v-form class="register" v-model="isValid" @submit.prevent="register">
-    <h1>{{ $t("register.message") }}</h1>
+  <v-form class="settings" v-model="isValid"  :key="currentUserKey" @submit.prevent="updateSettings">
+    <h1>{{ $t("settings.message") }}</h1>
     <v-text-field
-        v-model="firstName"
+        v-model="currentUser.firstName"
         :rules="[rules.required]"
         name="prenom"
         label="Prénom"
     ></v-text-field>
     <v-text-field
-        v-model="lastName"
+        v-model="currentUser.lastName"
         :rules="[rules.required]"
         name="nom"
         label="Nom"
     ></v-text-field>
     <v-text-field
-        v-model="mail"
+        v-model="currentUser.mail"
+        readonly
         :rules="[rules.validEmail]"
         name="email"
         label="E-mail"
@@ -38,22 +39,28 @@
         counter
     ></v-text-field><!-- todo: use $t !-->
     <v-btn type="submit" :disabled="!isValid">
-      {{ $t("register.message") }}
+      {{ $t("settings.submit") }}
     </v-btn>
   </v-form>
 </template>
 
-
 <script>
 export default {
+  name: "Settings",
+  created(){
+    this.$store.dispatch('getCurrentUser')
+    .then(response => {
+            this.currentUser = response;
+            this.currentUserKey ++
+        })
+    },
   data(){
     return {
-      firstName : "",
-      lastName: "",
-      mail : "",
+      currentUser: "",
       password : "",
       password_confirmation : "",
       isValid: true,
+      currentUserKey : 1,
       rules: {
         required: v => !!v || 'Required.', // todo: use $t
         min: v => v.length >= 6 || 'Min 6 characters', // todo: use $t
@@ -62,17 +69,15 @@ export default {
     }
   },
   methods: {
-    register: function () {
+    updateSettings: function () {
       let data = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        mail: this.mail,
+        firstName: this.currentUser.firstName,
+        lastName: this.currentUser.lastName,
         password: this.password,
       }
-      this.$store.dispatch('register', data)
+      this.$store.dispatch('updateSettings', data)
           .then(() => {
-            // todo: show -> you must verify our account with the email blablabla
-            this.$router.push("/auth");
+            this.$router.push("/");
           })
           .catch(err => console.log(err)); // todo: real exception handling
     }
@@ -80,9 +85,8 @@ export default {
 }
 </script>
 
-
 <style scoped>
-.register {
+.settings {
   width: 600px;
   border: 1px solid #CCCCCC;
   background-color: #FFFFFF;
@@ -91,5 +95,4 @@ export default {
   padding: 25px;
   text-align: center;
 }
-
 </style>

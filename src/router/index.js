@@ -8,6 +8,7 @@ import AllMessages from '../views/AllMessages.vue'
 import Conversation from '../views/Conversation.vue'
 
 import store from '../store/index'
+import Settings from "@/views/Settings";
 
 Vue.use(VueRouter)
 
@@ -42,7 +43,13 @@ const routes = [
     name: "conversation",
     component: Conversation,
     props: true
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: Settings,
   }
+
 ]
 
 const router = new VueRouter({

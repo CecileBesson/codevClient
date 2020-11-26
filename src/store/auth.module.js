@@ -15,6 +15,9 @@ export const auth = {
         auth_error(state){
             state.isLoggedIn = false;
         },
+       set_currentUser(state, user){
+            state.currentUser = user;
+       },
         logout(state){
             state.isLoggedIn = false;
         },
@@ -24,7 +27,7 @@ export const auth = {
             return AuthService.login(user).then(
                 token => {
                     localStorage.setItem('token', token);
-                    commit('auth_success', token, user);
+                    commit('auth_success', user, token);
                 },
                 error => {
                     commit('auth_error');
@@ -52,6 +55,28 @@ export const auth = {
                 }
             );
         },
+        updateSettings({commit}, user){
+            return AuthService.updateSettings(user).then(
+                () => {
+                },
+                error => {
+                    commit('auth_error');
+                    localStorage.removeItem('token');
+                    return Promise.reject(error);
+                }
+            );
+        },
+        getCurrentUser({commit}){
+            return AuthService.getCurrentUser().then(
+                response => {
+                    commit('set_currentUser', response.data);
+                    return Promise.resolve(response.data);
+                },
+                error => {
+                    return Promise.reject(error);
+                }
+            )
+        },
         logout({commit}){
             localStorage.removeItem('token');
             commit('logout');
@@ -60,6 +85,9 @@ export const auth = {
     getters : {
         isLoggedIn: state => {
             return state.isLoggedIn;
+        },
+        getCurrentUser: state => {
+            return state.currentUser;
         }
     }
 };

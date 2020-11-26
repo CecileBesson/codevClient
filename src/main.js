@@ -31,7 +31,6 @@ Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-
 new Vue({
   vuetify,
   router,

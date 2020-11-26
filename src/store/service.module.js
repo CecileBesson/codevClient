@@ -55,7 +55,6 @@ export const service = {
             )
         },
         createService({commit}, newService){
-            console.log("=========" + JSON.stringify(newService))
             return ServiceService.createService(newService).then(
                 () => {
                     // ???
