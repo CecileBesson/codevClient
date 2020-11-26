@@ -20,17 +20,23 @@ export const auth = {
         },
     },
     actions: {
-        auth({commit}, user){
+        auth({dispatch, commit}, user){
             return AuthService.login(user).then(
                 token => {
                     localStorage.setItem('token', token);
                     commit('auth_success', token, user);
-                    return Promise.resolve(token);
                 },
                 error => {
                     commit('auth_error');
                     localStorage.removeItem('token');
                     return Promise.reject(error);
+                }
+            ).then(
+                () => {
+                    // load conversations
+                    dispatch('getConversations', null, {root: true});
+                    // subscribe to new messages
+                    dispatch('subscribeToNewMessage', null, {root: true});
                 }
             );
         },

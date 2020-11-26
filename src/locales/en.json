@@ -25,11 +25,29 @@
   "carousel.privateLesson": "Cours particuliers",
   "home.category": "Sélectionner une catégorie: ",
   "home.serviceList": "Liste des services: ",
-  "home.km": "Dans un rayon de: "
+  "home.km": "Dans un rayon de: ",
 
 
+  "alert.authFailed": "L'adresse mail ou le mot de passe est incorrect",
 
-
-
+  "allMessages.you": "Vous",
+  "allMessages.empty": "Vous n'avez aucun messages.",
+  "messages.seen": "Vu",
+  "messages.newAppointment.button": "Proposez un rendez-vous",
+  "messages.appointmentAsked": "Rendez-vous proposé le ",
+  "messages.appointmentAccepted": "Rendez-vous accepté le ",
+  "messages.appointmentProposed": "Rendez-vous proposé le ",
+  "messages.appointmentTaken": "Rendez-vous pris le ",
+  "messages.newAppointment.title": "Nouvelle proposition de rendez-vous",
+  "messages.at": " à ",
+  "messages.abort.button": "Annuler",
+  "messages.decline.button": "Refuser",
+  "messages.accept.button": "Accepter",
+  "messages.dialog.date": "Date",
+  "messages.dialog.hour": "Heure",
+  "messages.dialog.small": "* champs obligatoires",
+  "messages.dialog.new.button": "Proposer",
+  "messages.dialog.error": "Vous devez renseigner ce champ",
+  "messages.dialog.date.error": "Vous devez renseigner une date à partir de demain"
 
 }

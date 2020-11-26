@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Auth from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import OfferAservice from "@/views/OfferAservice";
+import AllMessages from '../views/AllMessages.vue'
+import Conversation from '../views/Conversation.vue'
 
 import store from '../store/index'
 
@@ -29,6 +31,17 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
+  },
+  {
+    path: '/messages',
+    name: 'messages',
+    component: AllMessages
+  },
+  {
+    path: "/conversation/:idConversation",
+    name: "conversation",
+    component: Conversation,
+    props: true
   }
 ]
 

@@ -8,7 +8,20 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="body-2">{{ item.text }}</v-list-item-title>
+            <v-list-item-title class="body-2">
+              <v-badge
+                  style="position: relative; bottom: 7px;"
+                  v-if="item.action === '/messages'"
+                  color="blue"
+                  :content="totalMessages"
+                  offset-x="-10"
+                  offset-y="17"
+                  :value="totalMessages > 0"
+              >
+                {{ item.text }}
+              </v-badge>
+              <span v-else>{{ item.text }}</span>
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -30,7 +43,7 @@ export default {
   data: function () {
     return {
       items: [
-        {icon: 'fas fa-comments', text: this.$t("drawer.mailbox"), action: '/'},
+        {icon: 'fas fa-comments', text: this.$t("drawer.mailbox"), action: '/messages'},
         {icon: 'fas fa-calendar-alt', text: this.$t("drawer.services"), action: '/services'},
         {icon: 'fas fa-calendar-plus', text: this.$t("drawer.offerAservice"), action: '/offerAService'},
         {icon: 'fas fa-list', text: this.$t("drawer.offeredServices"), action: '/services'},
@@ -42,6 +55,11 @@ export default {
     logout: function() {
       this.$store.dispatch('logout');
       this.$router.push("/auth");
+    }
+  },
+  computed: {
+    totalMessages() {
+      return this.$store.getters.totalUnreadMessages;
     }
   }
 }

@@ -26,6 +26,13 @@ export default {
         throw err;
       });
     });
+
+    if(this.$store.getters.isLoggedIn) {
+      // load conversations
+      this.$store.dispatch('getConversations');
+      // wait for new messages
+      this.$store.dispatch('subscribeToNewMessage');
+    }
   }
 }
 </script>
