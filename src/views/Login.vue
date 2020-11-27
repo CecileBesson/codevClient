@@ -16,11 +16,11 @@
         hint="At least 6 characters"
         counter
     ></v-text-field> <!-- todo: use $t !-->
-    <v-alert v-if="alertDlg" color="cyan"
+    <v-alert v-if="alertDlg!=null" color="cyan"
              border="left"
              elevation="2"
              colored-border>
-      {{$t("alert.authFailed")}}
+      {{ alertDlg }}
     </v-alert>
     <p>
       <router-link to="/register">Pas de compte? Inscrivez-vous ici !</router-link> <!-- todo: use $t !-->
@@ -41,7 +41,7 @@ export default {
       email : "",
       password : "",
       isValid: true,
-      alertDlg: false,
+      alertDlg: null,
       rules: {
         required: value => !!value || 'Required.', // todo: use $t
         min: v => v.length >= 6 || 'Min 6 characters', // todo: use $t
@@ -57,7 +57,14 @@ export default {
       let password = this.password;
       this.$store.dispatch('auth', { email, password })
           .then(() => this.$router.push('/'))
-          .catch(() => this.alertDlg = true);
+          .catch(error => {
+            if(error.response.status === 401) {
+              this.alertDlg = this.$i18n.t("alert.authFailed");
+            }
+            else if (error.response.status === 406) {
+              this.alertDlg = this.$i18n.t("alert.notActivated");
+            }
+          });
     }
   }
 }
