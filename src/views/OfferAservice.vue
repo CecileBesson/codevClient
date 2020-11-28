@@ -6,20 +6,27 @@
         name="nom"
         label="Nom du service"
     ></v-text-field>
-    <v-text-field
+    <v-autocomplete
         v-model="address"
-        name="adress"
         label="Adresse du service"
-    ></v-text-field>
-        <v-select
-          v-model="categories"
-          :items="categories"
-          item-text="label"
-          label="Type de service"
-          return-object
-          @input="setSelectedCategory"
-        >
-        </v-select>
+        :items="addressesOptions"
+        :loading="loadingAdresses"
+        :search-input.sync="search"
+        placeholder="Commencez à taper pour chercher"
+        hide-no-data
+        clearable
+        return-object
+        @input="setAddress"
+    ></v-autocomplete>
+    <v-select
+        v-model="categories"
+        :items="categories"
+        item-text="label"
+        label="Type de service"
+        return-object
+        @input="setSelectedCategory"
+    >
+    </v-select>
     <v-text-field
         v-model="description"
         name="description"
@@ -33,7 +40,7 @@
 
 <script>
 
-
+import debounce from 'debounce'
 export default {
   name: "OfferAservice",
   computed: {
@@ -48,15 +55,56 @@ export default {
       address: "",
       description : "",
       isValid: true,
+      keyService: -1,
+      addressesOptions: [],
+      loadingAdresses: false,
+      search: ' '
     }
   },
- created() {
+  created() {
     this.$store.dispatch('getCategories');
+  },
+  watch: {
+    search(value){
+      if(!value){
+        return
+      }
+      debounce(this.makeSearch, 200)(value, this)
+    }
   },
   methods: {
     setSelectedCategory(value){
       this.selectedCategory = value;
     },
+    makeSearch: async (value, self) => {
+      // Handle empty value
+      if (!value) {
+        self.addressesOptions = [];
+        self.address = '';
+      }
+      // Items have already been requested
+      if (self.loadingAdresses) {
+        return
+      }
+      self.loadingAdresses = true
+
+      fetch("https://api-adresse.data.gouv.fr/search/?q="+ value + "&autocomplete=1")
+          .then(options => options.json())
+          .then(response =>
+          {
+            for(let i=0; i< response['features'].length; i++){
+              self.addressesOptions.push(response['features'][i]['properties']['label']);
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+          .finally(() => (self.loadingAdresses = false))
+
+    },
+     setAddress(value){
+       this.address = value;
+     },
     offerAService: function () {
       fetch("https://api-adresse.data.gouv.fr/search/?q="+ this.address)
           .then(location => location.json())
@@ -67,15 +115,19 @@ export default {
               longitude: response['features'][0]['geometry']['coordinates'][0],
               latitude: response['features'][0]['geometry']['coordinates'][1],
               category: {
-                idCategory :this.selectedCategory.idCategory
+                idCategory: this.selectedCategory.idCategory
               },
             }
             this.$store.dispatch('createService', data)
+                .then(() => {
+                  // todo: push to /mesServicesProposés
+                  this.$router.push("/");
+                })
+                .catch(err => console.log(err));
           })
-          .catch(err => console.log(err));
-    },
-  }
-  }
+    }
+  },
+}
 </script>
 
 <style scoped>
