@@ -3,7 +3,6 @@
     <div class="carousel-view">
       <CategoryCarousel v-if="categories.length>0" :categories="categories"  @selectedCategory="onSelectedCategory"/>
     </div>
-
     <div >
       <v-bottom-navigation
           v-model="showList"
@@ -13,12 +12,10 @@
         <v-btn icon @click="showList = true">
           <span>Liste</span>
           <v-icon>fas fa-stream fa-10x</v-icon>
-
         </v-btn>
         <v-btn icon  @click="showList = false">
           <span>Carte</span>
           <v-icon>fas fa-map-marker-alt</v-icon>
-
         </v-btn>
         <v-slider class="km"
                   inverse-label
@@ -31,15 +28,12 @@
         ></v-slider>
       </v-bottom-navigation>
     </div>
-
-
     <v-row style="padding-left:20px">
       <HomeList v-if="!showList" :services="services"/>
     </v-row>
     <div v-if="showList">
       <HomeMap :key="mapKey" :services="services"/>
     </div>
-
   </div>
 
 

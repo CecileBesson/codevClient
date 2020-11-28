@@ -4,7 +4,7 @@
             :key="service.idService"
             elevation="5">
       <v-card-title>
-        <v-row style="font-size: 20px;">
+        <v-row style="font-size: 16px;">
           <v-col class="name">
             {{ service.name }}
           </v-col>
@@ -63,7 +63,7 @@ export default {
 @Media screen and (max-width: 500px) {
   .service{
     width: 320px;
-    height: 250px;
+    height: 270px;
     min-height: 100px;
     margin-left: 25px;
     margin-top: 20px;
