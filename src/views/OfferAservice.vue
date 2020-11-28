@@ -12,7 +12,6 @@
         :items="addressesOptions"
         :loading="loadingAdresses"
         :search-input.sync="search"
-        placeholder="Commencez à taper pour chercher"
         hide-no-data
         clearable
         return-object
@@ -131,13 +130,31 @@ export default {
 </script>
 
 <style scoped>
-.createService {
-  width: 600px;
-  border: 1px solid #CCCCCC;
-  background-color: #FFFFFF;
-  margin: auto;
-  margin-top: 200px;
-  padding: 25px;
-  text-align: center;
+@Media screen and (max-width: 500px) {
+  .createService {
+    width: 90%;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 100px;
+    padding: 25px;
+    text-align: center;
+  }
+  h1{
+    font-size: 19px;
+    margin-bottom: 20px;
+  }
+}
+
+@Media screen and (min-width:500px) {
+  .createService {
+    width: 600px;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 200px;
+    padding: 25px;
+    text-align: center;
+  }
 }
 </style>

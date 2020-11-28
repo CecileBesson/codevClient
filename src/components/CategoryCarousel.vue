@@ -25,6 +25,8 @@
 
 <script>
 import { Carousel, Slide } from 'vue-carousel';
+
+
 export default {
 name: "CategoryCarousel",
   data(){
@@ -76,10 +78,10 @@ name: "CategoryCarousel",
 @Media screen and (max-width: 500px) {
   .img {
     width:115px;
-
   }
   .VueCarousel-slide h3  {
-    font-size: 12px;
+    font-size: 14px;
+    color: #164A84;
   }
   .VueCarousel-slide .img-container {
     height: 110px;

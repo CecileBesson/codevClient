@@ -82,14 +82,31 @@ export default {
 
 
 <style scoped>
-.register {
-  width: 600px;
-  border: 1px solid #CCCCCC;
-  background-color: #FFFFFF;
-  margin: auto;
-  margin-top: 200px;
-  padding: 25px;
-  text-align: center;
+@Media screen and (max-width: 500px) {
+  .register {
+    width: 90%;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 50px;
+    padding: 25px;
+    text-align: center;
+  }
+  h1{
+    font-size: 19px;
+    margin-bottom: 20px;
+  }
 }
 
+@Media screen and (min-width:500px) {
+  .register {
+    width: 600px;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 200px;
+    padding: 25px;
+    text-align: center;
+  }
+}
 </style>

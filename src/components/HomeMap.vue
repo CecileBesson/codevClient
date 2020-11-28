@@ -29,9 +29,10 @@ export default {
 
 <style>
 .map{
-  height: 500px;
+  height: 400px;
   width: 90%;
   margin-left: 20px;
+  margin-top: 25px;
   overflow: auto;
 }
 </style>

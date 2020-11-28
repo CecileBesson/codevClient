@@ -1,26 +1,26 @@
 <template>
   <v-form class="settings" v-model="isValid"  :key="currentUserKey" @submit.prevent="updateSettings">
     <h1>{{ $t("settings.message") }}</h1>
-    <v-text-field
+    <v-text-field class="small"
         v-model="currentUser.firstName"
         :rules="[rules.required]"
         name="prenom"
         label="Prénom"
     ></v-text-field>
-    <v-text-field
+    <v-text-field class="small"
         v-model="currentUser.lastName"
         :rules="[rules.required]"
         name="nom"
         label="Nom"
     ></v-text-field>
-    <v-text-field
+    <v-text-field class="small"
         v-model="currentUser.mail"
         readonly
         :rules="[rules.validEmail]"
         name="email"
         label="E-mail"
     ></v-text-field>
-    <v-text-field
+    <v-text-field class="small"
         type="password"
         v-model="password"
         :rules="[rules.required, rules.min]"
@@ -29,7 +29,7 @@
         hint="At least 6 characters"
         counter
     ></v-text-field><!-- todo: use $t !-->
-    <v-text-field
+    <v-text-field class="small"
         type="password"
         v-model="password_confirmation"
         :rules="[rules.required, rules.min, (password === password_confirmation) || 'Password must match']"
@@ -38,7 +38,7 @@
         hint="At least 6 characters"
         counter
     ></v-text-field><!-- todo: use $t !-->
-    <v-btn type="submit" :disabled="!isValid">
+    <v-btn small type="submit" :disabled="!isValid">
       {{ $t("settings.submit") }}
     </v-btn>
   </v-form>
@@ -86,13 +86,36 @@ export default {
 </script>
 
 <style scoped>
+
+@Media screen and (max-width: 500px) {
 .settings {
-  width: 600px;
+  width: 90%;
   border: 1px solid #CCCCCC;
   background-color: #FFFFFF;
   margin: auto;
-  margin-top: 200px;
+  margin-top: 40px;
   padding: 25px;
   text-align: center;
+}
+  .small{
+    font-size: 16px;
+    text-align: center;
+  }
+  h1{
+    font-size: 19px;
+    margin-bottom: 20px;
+  }
+}
+
+@Media screen and (min-width:500px) {
+  .settings {
+    width: 600px;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 200px;
+    padding: 25px;
+    text-align: center;
+  }
 }
 </style>

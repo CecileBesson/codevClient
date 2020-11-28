@@ -4,16 +4,22 @@
             :key="service.idService"
             elevation="5">
       <v-card-title>
-        <v-row> {{ service.name }} {{ getKilometers(service) }} Km</v-row>
+        <v-row style="font-size: 20px;">
+          <v-col class="name">
+            {{ service.name }}
+          </v-col>
+          <v-col class="km">
+            {{ getKilometers(service) }} km
+          </v-col>
+        </v-row>
       </v-card-title>
-      <v-card-text>
+      <v-card-text class="text">
         {{ service.description}}
       </v-card-text>
       <v-card-actions>
         <v-btn
             color="#1560BD"
-            text
-        >
+            text>
           J'ai besoin de toi !
         </v-btn>
       </v-card-actions>
@@ -56,12 +62,22 @@ export default {
 <style scoped>
 @Media screen and (max-width: 500px) {
   .service{
-    width: 300px;
+    width: 320px;
+    height: 250px;
     min-height: 100px;
     margin-left: 25px;
     margin-top: 20px;
   }
-
+  .text{
+    font-size: 14px;
+    text-align: justify;
+  }
+  .km{
+    text-align: right;
+  }
+  .name{
+    text-align: left;
+  }
 }
 
 @Media screen and (min-width:500px) {
@@ -71,7 +87,11 @@ export default {
     margin-left: 25px;
     margin-top: 20px;
   }
-
+  .km{
+    text-align: right;
+  }
+  .name{
+    text-align: left;
+  }
 }
-
 </style>

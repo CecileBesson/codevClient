@@ -19,7 +19,8 @@
     <v-alert v-if="alertDlg" color="cyan"
              border="left"
              elevation="2"
-             colored-border>
+             colored-border
+    dense>
       {{$t("alert.authFailed")}}
     </v-alert>
     <p>
@@ -64,28 +65,34 @@ export default {
 </script>
 
 <style scoped>
-.login {
-  width: 500px;
-  border: 1px solid #CCCCCC;
-  background-color: #FFFFFF;
-  margin: 200px auto auto;
-  padding: 25px;
-  text-align: center;
-}
-
-button{
-  padding-top: 5px;
-}
-@media title and (width: 500px){
-  .title{
-    font-size: 12px;
+@Media screen and (max-width: 500px) {
+  .login {
+    width: 93%;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 100px;
+    padding: 25px;
+    text-align: center;
   }
-
-}
-@media title and (width: 501px){
-  .title{
-    font-size: 45px;
+  h1{
+    font-size: 19px;
+    margin-bottom: 20px;
+  }
+  .v-alert{
+    font-size: 14px;
   }
 }
 
+@Media screen and (min-width:500px) {
+  .login {
+    width: 600px;
+    border: 1px solid #CCCCCC;
+    background-color: #FFFFFF;
+    margin: auto;
+    margin-top: 200px;
+    padding: 25px;
+    text-align: center;
+  }
+}
 </style>
