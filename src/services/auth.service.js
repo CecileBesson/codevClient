@@ -16,10 +16,7 @@ class AuthService {
     }
     register(user) {
         return axios
-            .post(API_URL + "users", user)
-            .then(response => {
-                return response;
-            });
+            .post(API_URL + "users", user);
     }
     updateSettings(user) {
         return axios

@@ -2,24 +2,28 @@
   <v-form class="register" v-model="isValid" @submit.prevent="register">
     <h1>{{ $t("register.message") }}</h1>
     <v-text-field
+        v-show="!registered"
         v-model="firstName"
         :rules="[rules.required]"
         name="prenom"
         label="Prénom"
     ></v-text-field>
     <v-text-field
+        v-show="!registered"
         v-model="lastName"
         :rules="[rules.required]"
         name="nom"
         label="Nom"
     ></v-text-field>
     <v-text-field
+        v-show="!registered"
         v-model="mail"
         :rules="[rules.validEmail]"
         name="email"
         label="E-mail"
     ></v-text-field>
     <v-text-field
+        v-show="!registered"
         type="password"
         v-model="password"
         :rules="[rules.required, rules.min]"
@@ -29,6 +33,7 @@
         counter
     ></v-text-field><!-- todo: use $t !-->
     <v-text-field
+        v-show="!registered"
         type="password"
         v-model="password_confirmation"
         :rules="[rules.required, rules.min, (password === password_confirmation) || 'Password must match']"
@@ -37,7 +42,22 @@
         hint="At least 6 characters"
         counter
     ></v-text-field><!-- todo: use $t !-->
-    <v-btn type="submit" :disabled="!isValid">
+
+    <v-alert v-if="alertDlg!=null" color="cyan"
+             border="left"
+             elevation="2"
+             colored-border>
+      {{ alertDlg }}
+    </v-alert>
+
+    <v-alert v-if="registered" color="cyan"
+             border="left"
+             elevation="2"
+             colored-border>
+      {{ $t("register.registred") }}
+    </v-alert>
+
+    <v-btn v-show="!registered" type="submit" :disabled="!isValid">
       {{ $t("register.message") }}
     </v-btn>
   </v-form>
@@ -48,6 +68,8 @@
 export default {
   data(){
     return {
+      alertDlg: null,
+      registered: false,
       firstName : "",
       lastName: "",
       mail : "",
@@ -69,12 +91,17 @@ export default {
         mail: this.mail,
         password: this.password,
       }
+      this.alertDlg = null;
       this.$store.dispatch('register', data)
           .then(() => {
-            // todo: show -> you must verify our account with the email blablabla
+            this.registered = true;
             this.$router.push("/auth");
           })
-          .catch(err => console.log(err)); // todo: real exception handling
+          .catch(err => {
+            if(err.response.status === 400) {
+              this.alertDlg = err.response.data.detailedMessage;
+            }
+          });
     }
   }
 }
@@ -109,4 +136,5 @@ export default {
     text-align: center;
   }
 }
+
 </style>

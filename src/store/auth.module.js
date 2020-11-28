@@ -48,7 +48,7 @@ export const auth = {
                 () => {
                     // go through validation system
                 },
-                error => {
+                error =>{
                     commit('auth_error');
                     localStorage.removeItem('token');
                     return Promise.reject(error);

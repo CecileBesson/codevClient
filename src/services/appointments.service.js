@@ -31,6 +31,13 @@ class AppointmentsService {
             }
         )
     }
+    appointmentsToCome() {
+        return axios
+            .get(API_URL + "appointments/coming", { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
 }
 
 export default new AppointmentsService();

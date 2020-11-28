@@ -6,6 +6,7 @@ import Register from '../views/Register.vue'
 import OfferAservice from "@/views/OfferAservice";
 import AllMessages from '../views/AllMessages.vue'
 import Conversation from '../views/Conversation.vue'
+import ComingServices from '../views/ComingServices.vue'
 
 import store from '../store/index'
 import Settings from "@/views/Settings";
@@ -37,6 +38,11 @@ const routes = [
     path: '/messages',
     name: 'messages',
     component: AllMessages
+  },
+  {
+    path: '/comingServices',
+    name: 'comingServices',
+    component: ComingServices
   },
   {
     path: "/conversation/:idConversation",

@@ -9,6 +9,9 @@ module.exports = {
       fallbackLocale: 'en',
       localeDir: 'locales',
       enableInSFC: false
-    }
-  }
+    },
+    cordovaPath: 'src-cordova'
+  },
+
+  publicPath: ''
 }
