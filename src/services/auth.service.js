@@ -2,6 +2,7 @@ import axios from 'axios';
 import authHeader from "@/services/authHeader";
 
 const API_URL = 'http://localhost:9000/api/v1/';
+//const API_URL = 'http://82.64.132.220:9000/api/v1/';
 
 class AuthService {
     login(user) {
@@ -11,8 +12,11 @@ class AuthService {
                 password: user.password
             })
             .then(response => {
+
                 return response.data.token;
-            });
+            }).catch(e => {
+                console.log(e.message(e))
+            })
     }
     register(user) {
         return axios

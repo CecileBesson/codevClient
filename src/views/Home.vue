@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="carousel-view">
-      <CategoryCarousel v-if="categories.length>0" :categories="categories"  @selectedCategory="onSelectedCategory"/>
+      <CategoryCarousel  v-if="categories.length>0" :categories="categories"  @selectedCategory="onSelectedCategory"/>
     </div>
-    <div >
+    <div>
       <v-bottom-navigation
           v-model="showList"
           background-color="#164A84"
@@ -55,7 +55,7 @@ export default {
       perimeter: 0,
       showList: true,
       mapKey: 1,
-      isSelectedCategory: false
+      isSelectedCategory: false,
     }
   },
   computed:{
@@ -64,13 +64,15 @@ export default {
     },
   },
   created() {
+
     if(!("geolocation" in navigator)) {
       this.errorStr = 'Geolocation is not available.';
       return;
     }
+
     this.gettingLocation = true;
     // get position
-    navigator.geolocation.getCurrentPosition(pos => {
+   navigator.geolocation.getCurrentPosition(pos => {
           this.gettingLocation = false;
           localStorage.setItem("latitude", pos.coords.latitude)
           localStorage.setItem("longitude", pos.coords.longitude)

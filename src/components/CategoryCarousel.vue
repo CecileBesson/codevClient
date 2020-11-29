@@ -17,7 +17,6 @@
              :alt="category.label">
         <h3>{{ category.label }}</h3>
       </div>
-
     </slide>
   </carousel>
 </div>
@@ -43,7 +42,6 @@ name: "CategoryCarousel",
   },
   methods:{
     created(){
-
     },
     selectCategory(id) {
       if (this.currentSelect === id)
@@ -71,7 +69,7 @@ name: "CategoryCarousel",
 
 <style scoped>
 .VueCarousel-slide .img-container {
-  margin-top: 5px;
+  margin-top: 7px;
   margin-left: 5px;
   text-align: center;
 }
