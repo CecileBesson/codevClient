@@ -3,7 +3,7 @@
   <carousel
       :per-page="3"
       :perPageCustom="[[200, 3],[550,4], [1100, 4],[1380, 4]]"
-      :navigation-enabled="true"
+      :navigation-enabled="false"
       :paginationEnabled="false"
       @touchstart.native="onTouchStart"
       @touchend.native="onTouchEnd"
