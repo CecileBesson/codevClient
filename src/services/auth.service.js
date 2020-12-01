@@ -11,11 +11,8 @@ class AuthService {
                 password: user.password
             })
             .then(response => {
-
                 return response.data.token;
-            }).catch(e => {
-                console.log(e.message(e))
-            })
+            });
     }
     register(user) {
         return axios
