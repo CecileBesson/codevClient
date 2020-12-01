@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-app-bar dark
-    clipped-left app
-     src="@/assets/BanCodev.png">
+               clipped-left app
+               @click="goHome"
+               src="@/assets/BanCodev.png">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="isLoggedIn"></v-app-bar-nav-icon>
-      <h3 @click="goHome" class="white--text">{{$t("title")}}</h3>
     </v-app-bar>
 
     <v-navigation-drawer v-if="isLoggedIn" v-model="drawer" clipped fixed app >
@@ -26,7 +26,11 @@ export default {
   },
   methods: {
     goHome () {
-      this.$router.replace('/');
+      this.$router.replace('/').catch(
+          () => {
+            // don't print redundant navigation message in console if we're already in home
+          }
+      );
     }
   },
   computed: {
