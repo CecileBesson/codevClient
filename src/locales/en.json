@@ -13,7 +13,7 @@
   "login.password": "Entrez votre mot de passe",
   "home.welcome": "Bienvenue !",
   "register.message" : "S'enregistrer",
-  "register.registred": "Compte enregistré ! Vous avez reçu un mail pour activer votre compte (obligatoire avant de pouvoir l'utiliser).",
+  "register.registred": "Compte enregistré ! Nous vous avons envoyé un mail pour confirmer votre compte.",
   "alert.authFailed": "L'adresse mail ou le mot de passe est incorrect",
   "alert.notActivated": "Ce compte n'est pas activé. Merci de le faire grace au mail reçu.",
   "carousel.DIY": "Bricolage",
