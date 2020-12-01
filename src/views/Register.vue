@@ -50,12 +50,9 @@
       {{ alertDlg }}
     </v-alert>
 
-    <v-alert v-if="registered" color="cyan"
-             border="left"
-             elevation="2"
-             colored-border>
+    <p v-if="registered" style="text-align: justify">
       {{ $t("register.registred") }}
-    </v-alert>
+    </p>
 
     <v-btn v-show="!registered" type="submit" :disabled="!isValid">
       {{ $t("register.message") }}
@@ -95,7 +92,6 @@ export default {
       this.$store.dispatch('register', data)
           .then(() => {
             this.registered = true;
-            this.$router.push("/auth");
           })
           .catch(err => {
             if(err.response.status === 400) {
