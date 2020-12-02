@@ -24,11 +24,6 @@ export default {
   props: {
     idService: String
   },
-  data(){
-    return {
-      mapKey: 2
-    }
-  },
   computed : {
     currentService: function () {
       return this.$store.getters.currentService;
