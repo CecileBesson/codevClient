@@ -128,9 +128,6 @@ export const service = {
         currentService:state =>{
             return state.currentService;
         },
-        totalUnreadMessages: state => {
-            return state.totalUnreadMessages;
-        },
         categories:state => {
             return state.categories;
         },
