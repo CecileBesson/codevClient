@@ -36,5 +36,6 @@ export default {
   margin-left: 20px;
   margin-top: 25px;
   overflow: auto;
+  z-index: 1;
 }
 </style>
