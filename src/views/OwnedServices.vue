@@ -3,6 +3,7 @@
     <h1 class="ma-4">{{ $t("drawer.offeredServices") }}</h1>
     <div style="max-width: 96%; margin-left: 2%;">
       <div class="pa-2 mb-2 container" v-for="service in services" :key="service.id" >
+        <div v-if="service.active == true">
         <h2>
           {{ service.name }}
         </h2>
@@ -17,6 +18,7 @@
           >
             {{ $t("comingServices.go") }}
           </v-btn>
+        </div>
         </div>
       </div>
     </div>

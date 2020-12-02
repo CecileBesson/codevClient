@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-card class = "service" v-for="service in services"
+    <v-card class = "service" v-for="service in filteredServices"
             :key="service.idService"
             elevation="5">
       <v-card-title>
@@ -36,6 +36,19 @@ export default {
   props: {
     services: {},
   },
+  computed: {
+    filteredServices: function(){
+      let filteredServices = new Array();
+      if(this.services.length > 0){
+        this.services.forEach(service =>{
+            if(service.active == 1) filteredServices.push(service);
+        })
+        return filteredServices;
+      }
+
+      return this.services;
+    }
+  },
   methods: {
     getKilometers(service){
       return this.getDistanceFromLatitudeLongitudeInKm(service.latitude, service.longitude, localStorage.getItem("latitude"), localStorage.getItem("longitude"));
@@ -57,7 +70,7 @@ export default {
       let d = R * c; // Distance in km
       return parseFloat(d.toString()).toFixed(1);
     }
-  }
+  },
 }
 </script>
 

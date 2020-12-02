@@ -2,18 +2,15 @@
   <v-form class="createService">
     <h1>{{ serviceTitle }}</h1>
     <div><strong> futur rendez-vous: </strong> {{numberAppointments}} <br></div>
-    <div CLASS="textContainer">
+    <div class="textContainer">
       <p><strong> Description du service: </strong> {{serviceDesc}} </p>
     </div>
     <div>
-
         <v-btn @click="$router.push('/Messages/' + idService)"> Conversations</v-btn>
 
         <v-btn  class ="blue white--text" @click="$router.push('/Update/' + idService)">  Modification </v-btn>
 
         <v-btn class ="red white--text" @click="Delete()"> Suppresion </v-btn>
-
-
     </div>
   </v-form>
 </template>

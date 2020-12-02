@@ -19,9 +19,11 @@ export default {
     }).addTo(map);
     if(this.services.length > 0){
       this.services.forEach(service => {
-        L.marker([service.latitude, service.longitude]).addTo(map)
-            .bindTooltip(service.name)
-            .bindPopup(service.description)})
+        if(service.active == true){
+          L.marker([service.latitude, service.longitude]).addTo(map)
+              .bindTooltip(service.name)
+              .bindPopup(service.description)}
+        })
     }
   },
 };

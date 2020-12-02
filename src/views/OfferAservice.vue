@@ -116,6 +116,7 @@ export default {
               category: {
                 idCategory: this.selectedCategory.idCategory
               },
+              active: true
             }
             this.$store.dispatch('createService', data)
                 .then(() => {
