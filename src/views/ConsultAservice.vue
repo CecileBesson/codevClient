@@ -4,9 +4,6 @@
     <div CLASS="textContainer">
       <p><strong> Description du service: </strong> {{currentService.description}}</p>
     </div>
-    <div>
-      <HomeMap :services="[currentService]" />
-    </div>
     <v-btn
         color="#1560BD"
         text
@@ -14,15 +11,22 @@
     >
       J'ai besoin de toi !
     </v-btn>
+
+    <HomeMap :services="[currentService]" />
   </div>
 
 </template>
 
 <script>
+import HomeMap from "@/components/HomeMap"
+
 export default {
   name: "ConsultAservice",
   props: {
     idService: String
+  },
+  components: {
+    HomeMap
   },
   computed : {
     currentService: function () {
