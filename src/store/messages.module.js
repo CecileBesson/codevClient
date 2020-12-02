@@ -5,6 +5,7 @@ import router from '../router/index'
 export const messages = {
     state: {
         conversations: [],
+        conversations_Service: [],
         totalUnreadMessages: 0,
         currentConversationMessages: [],
         conversation: null,
@@ -23,6 +24,9 @@ export const messages = {
         },
         current_appointments_loaded(state, appointments) {
             state.appointmentsForCurrentConversation = appointments;
+        },
+        conversations_related_loaded(state, conversations){
+            state.conversations_Service =conversations;
         }
     },
     actions: {
@@ -34,6 +38,14 @@ export const messages = {
                 }
             )
             // todo: catch errors
+        },
+        getConversationsRelated({commit}, idService){
+            return MessagesService.getConversationsByService(idService).then(
+                (conversations) => {
+                    commit('conversations_related_loaded', conversations);
+                    return Promise.resolve()
+                }
+            )
         },
         subscribeToNewMessage({dispatch, state}) {
             return MessagesService.getNewMessage().then(
@@ -154,6 +166,9 @@ export const messages = {
         },
         appointmentsForCurrentConversation: state => {
             return state.appointmentsForCurrentConversation;
+        },
+        conversations_Service: state => {
+            return state.conversations_Service
         }
     }
 };

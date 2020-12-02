@@ -36,11 +36,14 @@
 <script>
 
 export default {
-  name: "AllMessages",
+  name: "MessagesRelated",
   computed : {
     conversations: function () {
-      return this.$store.getters.conversations;
+      return this.$store.getters.conversations_Service;
     }
+  },
+  created() {
+    this.$store.dispatch('getConversationsRelated', this.idService);
   }
 }
 </script>

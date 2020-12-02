@@ -46,9 +46,8 @@ export default {
         {icon: 'fas fa-comments', text: this.$t("drawer.mailbox"), action: '/messages'},
         {icon: 'fas fa-calendar-alt', text: this.$t("drawer.comingServices"), action: '/comingServices'},
         {icon: 'fas fa-calendar-plus', text: this.$t("drawer.offerAservice"), action: '/offerAService'},
-        {icon: 'fas fa-list', text: this.$t("drawer.offeredServices"), action: '/offeredServices'},
+        {icon: 'fas fa-list', text: this.$t("drawer.offeredServices"), action: '/ownedServices'},
         {icon: 'fas fa-users-cog', text: this.$t("drawer.settings"), action: '/settings'},
-
       ]
     }
   },

@@ -28,6 +28,7 @@ export default {
     });
 
     if(this.$store.getters.isLoggedIn) {
+      this.$store.dispatch('getServicesByUser')
       // load conversations
       this.$store.dispatch('getConversations');
       // wait for new messages

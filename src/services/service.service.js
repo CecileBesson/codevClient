@@ -11,6 +11,15 @@ class ServiceService {
                 return response.data;
             });
     }
+    getServiceById(idService) {
+        return axios
+            .get(API_URL + "services/" + idService, {
+                headers: authHeader()
+                })
+            .then(response => {
+                return response.data;
+            });
+    }
     getServicesByCategory(category) {
         return axios
             .get(API_URL + "services", {
@@ -18,6 +27,13 @@ class ServiceService {
                 params: {
                     categoryId: category.idCategory
                 }})
+            .then(response => {
+                return response.data;
+            });
+    }
+    getServicesByUser() {
+        return axios
+            .get(API_URL + "services/owned", {headers: authHeader()})
             .then(response => {
                 return response.data;
             });
@@ -36,14 +52,32 @@ class ServiceService {
                 return response.data;
             });
     }
-    createService(newService){
+    createService(newService) {
         return axios
             .post(API_URL + "services", newService, {
                 headers: authHeader()
             })
             .then(response => {
-            return response.data
-        });
+                return response.data
+            });
+    }
+    deleteService(idService){
+        return axios
+            .delete(API_URL + "services/" + idService,{
+                headers: authHeader()
+            })
+            .then(response =>{
+                return response.data
+            })
+    }
+    updateService(payload){
+        return axios
+            .patch(API_URL + "services/" + payload.idService, payload,{
+                headers: authHeader()
+            })
+            .then(response =>{
+                return response.data
+            })
     }
 }
 

@@ -19,7 +19,9 @@
       <v-card-actions>
         <v-btn
             color="#1560BD"
-            text>
+            text
+            @click="$router.push('/service/' + service.idService)"
+        >
           J'ai besoin de toi !
         </v-btn>
       </v-card-actions>
