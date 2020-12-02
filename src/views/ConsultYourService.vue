@@ -3,7 +3,7 @@
     <h1>{{ serviceTitle }}</h1>
     <div><strong> futur rendez-vous: </strong> {{numberAppointments}} <br></div>
     <div class="textContainer">
-      <p><strong> Description du service: </strong> {{serviceDesc}} </p>
+      <p><strong> Description du service: </strong> {{serviceDesc}}</p>
     </div>
     <div>
         <v-btn @click="$router.push('/Messages/' + idService)"> Conversations</v-btn>

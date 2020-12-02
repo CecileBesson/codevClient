@@ -52,7 +52,7 @@ export default {
       currentCategory: {},
       gettingLocation: false,
       errorStr:null,
-      perimeter: 0,
+      perimeter: 20,
       showList: true,
       mapKey: 1,
       isSelectedCategory: false,
@@ -83,6 +83,21 @@ export default {
         })
     this.$store.dispatch('getCategories');
   },
+  /* updated(){
+    let category = this.currentCategory;
+    let latitude = this.getLatitude();
+    let longitude = this.getLongitude();
+    let perimeter = this.perimeter
+    this.$store.dispatch('getServicesByCategoryAndLocalisation', {category, latitude, longitude, perimeter} )
+        .then(servicesByCategoryAndLocalisation => {
+          this.services=servicesByCategoryAndLocalisation;
+          this.mapKey++;
+        }).catch(err => {
+      console.log(err);
+    })
+  },
+
+   */
   components: {
     CategoryCarousel,
     HomeList,
