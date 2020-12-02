@@ -8,11 +8,11 @@ import AllMessages from '../views/AllMessages.vue'
 import Conversation from '../views/Conversation.vue'
 import ComingServices from '../views/ComingServices.vue'
 import OwnedServices from '../views/OwnedServices.vue'
+import createConversation from '../views/createConversation.vue'
 
 import store from '../store/index'
 
 import Settings from "@/views/Settings";
-
 import ConsultYourService from "@/views/ConsultYourService";
 import ConsultAservice from "@/views/ConsultAservice";
 import Update from "@/views/Update";
@@ -90,6 +90,12 @@ const routes = [
     path: "/Update/:idService",
     name: "Update",
     component: Update,
+    props: true
+  },
+  {
+    path: "/createConversation/:idService",
+    name: "createConversation",
+    component: createConversation,
     props: true
   }
 

@@ -7,7 +7,7 @@
     <v-btn
         color="#1560BD"
         text
-        @click="$router.push('/conversation/' + currentService.idService)"
+        @click="$router.push('/createConversation/' + currentService.idService)"
     >
       J'ai besoin de toi !
     </v-btn>
@@ -42,9 +42,8 @@ export default {
       return conv.length;
     }
   },
-  created() {
+  mounted() {
     this.$store.dispatch('getCurrentService', this.idService);
-
   }
 }
 </script>
