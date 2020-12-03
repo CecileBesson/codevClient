@@ -2,7 +2,7 @@
   <div>
     <h1 class="ma-4">{{ $t("drawer.mailbox") }}</h1>
     <div class="convContainer" v-for="conversation in conversations" :key="conversation.service.idService">
-      <router-link class="link" :to='"conversation/"+conversation.service.idService'>
+      <a class="link" @click="$router.push('/conversation/'+conversation.service.idService)">
         <div class="pa-3 conversationBlock">
           <v-badge
               color="blue"
@@ -25,7 +25,7 @@
             </v-icon>
           </div>
         </div>
-      </router-link>
+      </a>
     </div>
     <p class="ml-3" v-if="conversations.length === 0">
       {{ $t("allMessages.empty") }}

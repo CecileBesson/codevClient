@@ -9,7 +9,8 @@ export const messages = {
         totalUnreadMessages: 0,
         currentConversationMessages: [],
         conversation: null,
-        appointmentsForCurrentConversation: []
+        appointmentsForCurrentConversation: [],
+        appointmentsForService: [],
     },
     mutations: {
         conversations_loaded(state, conversations){
@@ -27,7 +28,11 @@ export const messages = {
         },
         conversations_related_loaded(state, conversations){
             state.conversations_Service =conversations;
+        },
+        service_appointments_loaded(state, appointments) {
+            state.appointmentsForService = appointments;
         }
+
     },
     actions: {
         getConversations({commit}) {
@@ -89,6 +94,13 @@ export const messages = {
             return AppointmentsService.getAppointmentsForConversation(state.conversation.service.idService, idUser).then(
                 appointments => {
                     commit("current_appointments_loaded", appointments);
+                }
+            );
+        },
+        loadAppointmentsForCurrentService({commit}, idService) {
+            return AppointmentsService.getAppointmentsForService(idService).then(
+                appointments => {
+                    commit("service_appointments_loaded", appointments);
                 }
             );
         },
@@ -169,6 +181,9 @@ export const messages = {
         },
         conversations_Service: state => {
             return state.conversations_Service
+        },
+        appointmentsForService: state => {
+            return state.appointmentsForService;
         }
     }
 };

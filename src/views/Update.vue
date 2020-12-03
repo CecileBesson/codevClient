@@ -1,5 +1,5 @@
 <template>
-  <v-form class="updateservice" v-model="isValid" @submit.prevent="Modify(idService)">
+  <v-form class="ma-4 updateservice" v-model="isValid" @submit.prevent="Modify(idService)">
     <h1>{{ "Modifier un service" }}</h1>
     <v-text-field
         v-model="serviceName"
@@ -16,7 +16,7 @@
         name="description"
         label="Description du service"
     ></v-text-field>
-    <v-btn type="submit" :disabled="!isValid">
+    <v-btn color="primary" type="submit" :disabled="!isValid">
       {{ $t("Modifier le service") }}
     </v-btn>
   </v-form>
@@ -68,11 +68,7 @@ export default {
 
 <style scoped>
 .updateservice {
-  width: 600px;
   border: 1px solid #CCCCCC;
-  background-color: #FFFFFF;
-  margin: auto;
-  margin-top: 200px;
   padding: 25px;
   text-align: center;
 }

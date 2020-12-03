@@ -22,7 +22,7 @@
             text
             @click="$router.push('/service/' + service.idService)"
         >
-          J'ai besoin de toi !
+          Voir l'annonce !
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -47,7 +47,16 @@ export default {
       }
 
       return this.services;
-    }
+    },
+    numberAppointments() {
+      this.$store.dispatch("loadAppointmentsForCurrentService", this.idService);
+      let conv =  this.$store.getters.appointmentsForService;
+      if(conv.length == null) {
+        return "Nombre de futurs rendez-vous ";
+      }
+
+      return conv.length;
+    },
   },
   methods: {
     getKilometers(service){

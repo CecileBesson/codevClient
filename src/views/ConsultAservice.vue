@@ -1,19 +1,35 @@
 <template>
-  <div class="createService">
+  <div class="createService mt-4 mb-6">
     <h1>{{ currentService.name }}</h1>
-    <div CLASS="textContainer">
-      <p><strong> Description du service: </strong> {{currentService.description}}</p>
+    <div class="textContainer">
+      <p>
+        <strong>Description du service: </strong><br/>
+        {{currentService.description}}
+      </p>
     </div>
     <v-btn
         color="#1560BD"
         text
         @click="$router.push('/createConversation/' + currentService.idService)"
+        v-if="numberAppointments == 0"
     >
       J'ai besoin de toi !
     </v-btn>
 
-    <HomeMap :services="[currentService]" />
-  </div>
+    <v-btn
+        color="#1560BD"
+        text
+        @click="$router.push('/comingServices')"
+        v-if="numberAppointments > 0"
+    >
+      Allez au Rendez-vous !
+    </v-btn>
+
+    <div>
+      <HomeMap :services="serviceToPass" />
+    </div>
+
+ </div>
 
 </template>
 
@@ -32,10 +48,13 @@ export default {
     currentService: function () {
       return this.$store.getters.currentService;
     },
-
+    serviceToPass() {
+      return [this.currentService];
+    },
     numberAppointments() {
-      let conv = this.$store.getters.currentService;
-      if(conv === null) {
+      this.$store.dispatch("loadAppointmentsForCurrentService", this.idService);
+      let conv =  this.$store.getters.appointmentsForService;
+      if(conv.length == null) {
         return "Nombre de futurs rendez-vous ";
       }
 
@@ -50,7 +69,6 @@ export default {
 
 <style scoped>
 .createService {
-  width: 1600px;
   height: 600px;
   border: 1px solid #CCCCCC;
   background-color: #FFFFFF;
@@ -61,10 +79,8 @@ export default {
 }
 
 .textContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  border: none !important;
+  width: 100%;
+  text-align: justify;
 }
 
 </style>
