@@ -54,10 +54,11 @@ export default {
 <style>
 .map{
   height: 400px;
-  width: 90%;
-  margin-left: 20px;
+  width: 96%;
   margin-top: 25px;
+  margin-left: 2%;
   overflow: auto;
   z-index: 1;
+  padding: 0;
 }
 </style>

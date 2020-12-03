@@ -1,8 +1,11 @@
 <template>
-  <div class="createService">
+  <div class="createService mt-4 mb-6">
     <h1>{{ currentService.name }}</h1>
-    <div CLASS="textContainer">
-      <p><strong> Description du service: </strong> {{currentService.description}}</p>
+    <div class="textContainer">
+      <p>
+        <strong>Description du service: </strong><br/>
+        {{currentService.description}}
+      </p>
     </div>
     <v-btn
         color="#1560BD"
@@ -22,7 +25,9 @@
       Allez au Rendez-vous !
     </v-btn>
 
-    <HomeMap :services="[currentService]" />
+    <div>
+      <HomeMap :services="serviceToPass" />
+    </div>
 
  </div>
 
@@ -43,6 +48,9 @@ export default {
     currentService: function () {
       return this.$store.getters.currentService;
     },
+    serviceToPass() {
+      return [this.currentService];
+    },
     numberAppointments() {
       this.$store.dispatch("loadAppointmentsForCurrentService", this.idService);
       let conv =  this.$store.getters.appointmentsForService;
@@ -55,15 +63,12 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getCurrentService', this.idService);
-    this.$store.getters.servicesByUser;
-
   }
 }
 </script>
 
 <style scoped>
 .createService {
-  width: 1600px;
   height: 600px;
   border: 1px solid #CCCCCC;
   background-color: #FFFFFF;
@@ -74,10 +79,8 @@ export default {
 }
 
 .textContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  border: none !important;
+  width: 100%;
+  text-align: justify;
 }
 
 </style>
