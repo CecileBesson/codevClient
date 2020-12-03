@@ -1,15 +1,20 @@
 <template>
   <v-form class="createService">
     <h1>{{ serviceTitle }}</h1>
-    <div><strong> futur rendez-vous: </strong> {{numberAppointments}} <br></div>
+
+    <p class="textContainer">
+      <strong> Futur rendez-vous: </strong> {{numberAppointments}}
+    </p>
+
     <div class="textContainer">
-      <p><strong> Description du service: </strong> {{serviceDesc}}</p>
+      <p>
+        <strong> Description du service: </strong><br/>
+        {{serviceDesc}}
+      </p>
     </div>
-    <div>
-        <v-btn @click="$router.push('/messages/' + idService)"> Conversations</v-btn>
-
-        <v-btn  class ="blue white--text" @click="$router.push('/Update/' + idService)">  Modification </v-btn>
-
+    <div class="buttonContainer">
+        <v-btn class="blue white--text" @click="$router.push('/messages/' + idService)"> Conversations</v-btn>
+        <v-btn @click="$router.push('/Update/' + idService)">  Modification </v-btn>
         <v-btn class ="red white--text" @click="Delete()"> Suppresion </v-btn>
     </div>
   </v-form>
@@ -64,8 +69,6 @@ export default {
 
 <style scoped>
 .createService {
-  width: 1600px;
-  height: 600px;
   border: 1px solid #CCCCCC;
   background-color: #FFFFFF;
   margin: auto;
@@ -75,10 +78,13 @@ export default {
 }
 
 .textContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  border: none !important;
+  width: 100%;
+  text-align: justify;
+}
+
+.buttonContainer button {
+  width: 200px;
+  margin-top: 15px;
 }
 
 </style>
