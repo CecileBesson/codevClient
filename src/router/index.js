@@ -7,9 +7,17 @@ import OfferAservice from "@/views/OfferAservice";
 import AllMessages from '../views/AllMessages.vue'
 import Conversation from '../views/Conversation.vue'
 import ComingServices from '../views/ComingServices.vue'
+import OwnedServices from '../views/OwnedServices.vue'
+import createConversation from '../views/createConversation.vue'
 
 import store from '../store/index'
+
 import Settings from "@/views/Settings";
+import ConsultYourService from "@/views/ConsultYourService";
+import ConsultAservice from "@/views/ConsultAservice";
+import Update from "@/views/Update";
+import MessagesRelated from "@/views/MessagesRelated";
+
 
 Vue.use(VueRouter)
 
@@ -40,6 +48,12 @@ const routes = [
     component: AllMessages
   },
   {
+    path: '/messages/:idService',
+    name: 'messages',
+    component: MessagesRelated,
+    props: true
+  },
+  {
     path: '/comingServices',
     name: 'comingServices',
     component: ComingServices
@@ -53,7 +67,36 @@ const routes = [
   {
     path: "/settings",
     name: "settings",
-    component: Settings,
+    component: Settings
+  },
+  {
+    path: "/ownedServices",
+    name: "ownedServices",
+    component: OwnedServices
+  },
+  {
+    path: "/service/:idService",
+    name: "consultAService",
+    component: ConsultAservice,
+    props: true
+  },
+  {
+    path: "/consultYourService/:idService",
+    name: "consultYourService",
+    component: ConsultYourService,
+    props: true
+  },
+  {
+    path: "/Update/:idService",
+    name: "Update",
+    component: Update,
+    props: true
+  },
+  {
+    path: "/createConversation/:idService",
+    name: "createConversation",
+    component: createConversation,
+    props: true
   }
 
 ]

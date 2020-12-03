@@ -12,6 +12,13 @@ class MessagesService {
                 return response.data;
             });
     }
+    getConversationsByService(idService) {
+        return axios
+            .get(API_URL + "conversations/" + idService, {headers: authHeader()})
+            .then(response => {
+                return response.data;
+            });
+    }
     getNewMessage() {
         return axios
             .get(API_URL + "messages/new", { headers: authHeader() })
