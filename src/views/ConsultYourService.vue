@@ -6,7 +6,7 @@
       <p><strong> Description du service: </strong> {{serviceDesc}} </p>
     </div>
     <div>
-        <v-btn @click="$router.push('/Messages/' + idService)"> Conversations</v-btn>
+        <v-btn @click="$router.push('/messages/' + idService)"> Conversations</v-btn>
 
         <v-btn  class ="blue white--text" @click="$router.push('/Update/' + idService)">  Modification </v-btn>
 
@@ -26,8 +26,9 @@ export default {
       return this.$store.getters.currentService;
     },
     numberAppointments() {
-      let conv = this.$store.getters.conversations_Service;
-      if(conv === null) {
+      this.$store.dispatch("loadAppointmentsForCurrentService", this.idService);
+      let conv =  this.$store.getters.appointmentsForService;
+      if(conv.length == null) {
         return "Nombre de futurs rendez-vous ";
       }
 

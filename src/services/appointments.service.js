@@ -12,6 +12,13 @@ class AppointmentsService {
                 return response.data;
             });
     }
+    getAppointmentsForService(idService) {
+        return axios
+            .get(API_URL + "appointments/service/" + idService, { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
+    }
     deleteAppointment(idAppointment) {
         return axios
             .delete(API_URL + "appointments/" + idAppointment, { headers: authHeader() });

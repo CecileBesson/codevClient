@@ -10,10 +10,23 @@
     <v-btn
         color="#1560BD"
         text
-        @click="$router.push('/conversation/' + currentService.idService)"
+        @click="$router.push('/createConversation/' + currentService.idService)"
+        v-if="numberAppointments == 0"
     >
       J'ai besoin de toi !
     </v-btn>
+
+    <v-btn
+        color="#1560BD"
+        text
+        @click="$router.push('/comingServices')"
+        v-if="numberAppointments > 0"
+    >
+      Allez au Rendez-vous !
+    </v-btn>
+
+    <HomeMap :services="[currentService]" />
+
   </div>
 
 </template>
@@ -33,10 +46,10 @@ export default {
     currentService: function () {
       return this.$store.getters.currentService;
     },
-
     numberAppointments() {
-      let conv = this.$store.getters.currentService;
-      if(conv === null) {
+      this.$store.dispatch("loadAppointmentsForCurrentService", this.idService);
+      let conv =  this.$store.getters.appointmentsForService;
+      if(conv.length == null) {
         return "Nombre de futurs rendez-vous ";
       }
 
@@ -45,7 +58,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getCurrentService', this.idService);
-
+    this.$store.getters.servicesByUser;
   }
 }
 </script>
