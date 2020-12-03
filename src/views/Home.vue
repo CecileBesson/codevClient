@@ -24,7 +24,7 @@
                   thumb-size="0"
                   max="50"
                   v-model="perimeter"
-                  @change="choosePerimeter(perimeter)"
+                  @change="updateServices()"
         ></v-slider>
       </v-bottom-navigation>
     </div>
@@ -32,12 +32,11 @@
       <HomeList v-if="!showList" :services="services"/>
     </v-row>
     <div v-if="showList">
-      <HomeMap :key="mapKey" :services="services"/>
+      <HomeMap :services="services"/>
     </div>
   </div>
-
-
 </template>
+
 <script>
 
 import HomeList from "@/components/HomeList";
@@ -48,23 +47,21 @@ export default {
   name: "Home",
   data(){
     return {
-      services : this.$store.getters.servicesByCategory,
+      services: [],
       currentCategory: {},
       gettingLocation: false,
       errorStr:null,
       perimeter: 20,
       showList: true,
-      mapKey: 1,
       isSelectedCategory: false,
     }
   },
   computed:{
     categories(){
-      return this.$store.getters.categories
-    },
+      return this.$store.getters.categories;
+    }
   },
-  created() {
-
+  mounted() {
     if(!("geolocation" in navigator)) {
       this.errorStr = 'Geolocation is not available.';
       return;
@@ -72,32 +69,20 @@ export default {
 
     this.gettingLocation = true;
     // get position
-   navigator.geolocation.getCurrentPosition(pos => {
-          this.gettingLocation = false;
-          localStorage.setItem("latitude", pos.coords.latitude)
-          localStorage.setItem("longitude", pos.coords.longitude)
-        },
-        err => {
-          this.gettingLocation = false;
-          this.errorStr = err.message;
-        })
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        this.gettingLocation = false;
+        localStorage.setItem("latitude", pos.coords.latitude);
+        localStorage.setItem("longitude", pos.coords.longitude);
+      },
+      err => {
+        this.gettingLocation = false;
+        this.errorStr = err.message;
+      }
+    );
     this.$store.dispatch('getCategories');
+    this.updateServices();
   },
-  /* updated(){
-    let category = this.currentCategory;
-    let latitude = this.getLatitude();
-    let longitude = this.getLongitude();
-    let perimeter = this.perimeter
-    this.$store.dispatch('getServicesByCategoryAndLocalisation', {category, latitude, longitude, perimeter} )
-        .then(servicesByCategoryAndLocalisation => {
-          this.services=servicesByCategoryAndLocalisation;
-          this.mapKey++;
-        }).catch(err => {
-      console.log(err);
-    })
-  },
-
-   */
   components: {
     CategoryCarousel,
     HomeList,
@@ -105,30 +90,29 @@ export default {
   },
   methods: {
     getLatitude(){
-      return localStorage.getItem("latitude")
+      return localStorage.getItem("latitude");
     },
     getLongitude(){
-      return localStorage.getItem("longitude")
+      return localStorage.getItem("longitude");
     },
-    choosePerimeter(perimeter){
+    updateServices() {
       let category = this.currentCategory;
       let latitude = this.getLatitude();
       let longitude = this.getLongitude();
-      this.$store.dispatch('getServicesByCategoryAndLocalisation', {category, latitude, longitude, perimeter} )
-          .then(servicesByCategoryAndLocalisation => {
-            this.services=servicesByCategoryAndLocalisation;
-            this.mapKey++;
-          }) .catch(err => {
-        console.log(err);
-      })
+      let perimeter = this.perimeter;
+      this.$store.dispatch('getServices', {category, latitude, longitude, perimeter } )
+          .then(services => {
+            this.services = services;
+          })
+          .catch(err => {
+            console.log(err);
+          });
     },
-    onSelectedCategory(category, service){
+    onSelectedCategory(category){
       this.isSelectedCategory = true;
       this.currentCategory = category;
-      this.services = service;
-      this.mapKey ++;
+      this.updateServices();
     }
-
   }
 }
 </script>

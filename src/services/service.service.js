@@ -38,16 +38,23 @@ class ServiceService {
                 return response.data;
             });
     }
-    getServicesByCategoryAndLocalisation(category,latitude, longitude, perimeter){
+    getServicesByCategoryAndLocalisation(category, latitude, longitude, perimeter) {
+        let params = {};
+        if(category && category.idCategory) {
+            params["categoryId"] = category.idCategory;
+        }
+        if(latitude) {
+            params["lat"] = latitude;
+        }
+        if(longitude) {
+            params["lon"] = longitude;
+        }
+        if(perimeter) {
+            params["perimeter"] = perimeter;
+        }
+
         return axios
-            .get(API_URL + "services", {
-                headers: authHeader(),
-                params: {
-                    categoryId: category.idCategory,
-                    lat: latitude,
-                    lon: longitude,
-                    perimeter: perimeter
-                }})
+            .get(API_URL + "services", { headers: authHeader(), params: params })
             .then(response => {
                 return response.data;
             });
@@ -78,6 +85,13 @@ class ServiceService {
             .then(response =>{
                 return response.data
             })
+    }
+    getAll() {
+        return axios
+            .get(API_URL + "services", { headers: authHeader() })
+            .then(response => {
+                return response.data;
+            });
     }
 }
 
