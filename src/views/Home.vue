@@ -23,6 +23,7 @@
                   thumb-label="always"
                   thumb-size="0"
                   max="50"
+                  min="1"
                   v-model="perimeter"
                   @change="updateServices()"
         ></v-slider>
