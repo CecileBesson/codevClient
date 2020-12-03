@@ -1,10 +1,9 @@
 import ServiceService from '../services/service.service';
 export const service = {
     state: {
-        categories: {},
-        servicesByCategory: {},
-        servicesByUser: {},
-        servicesByCategoryAndLocalisation: {},
+        categories: [],
+        servicesByCategory: [],
+        servicesByUser: [],
         currentService: {},
         serviceCreationError: false
     },
@@ -17,9 +16,6 @@ export const service = {
         },
         set_servicesByUser(state, servicesByUser){
             state.servicesByUser = servicesByUser;
-        },
-        set_servicesByCategoryAndLocalisation(state, servicesByCategoryAndLocalisation){
-            state.set_servicesByCategoryAndLocalisation = servicesByCategoryAndLocalisation;
         },
         set_currentService(state, currentService){
             state.currentService = currentService;
@@ -73,10 +69,10 @@ export const service = {
                 }
             )
         },
-        getServicesByCategoryAndLocalisation({commit}, payload){
-            return ServiceService.getServicesByCategoryAndLocalisation(payload.category,payload.latitude, payload.longitude, payload.perimeter).then(
+        // eslint-disable-next-line no-unused-vars
+        getServices({commit}, payload){
+            return ServiceService.getServicesByCategoryAndLocalisation(payload.category, payload.latitude, payload.longitude, payload.perimeter).then(
                 response => {
-                    commit('set_servicesByCategoryAndLocalisation', response);
                     return Promise.resolve(response);
                 },
                 error => {
@@ -128,11 +124,8 @@ export const service = {
         currentService:state =>{
             return state.currentService;
         },
-        totalUnreadMessages: state => {
-            return state.totalUnreadMessages;
-        },
         categories:state => {
             return state.categories;
-        },
+        }
     }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="drawer">
     <v-list dense >
       <template v-for="(item, i) in items">
         <v-divider dark v-if="item.divider" :key="i"></v-divider>
@@ -64,3 +64,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.drawer{
+  z-index: 4;
+}
+</style>
